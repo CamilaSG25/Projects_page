@@ -41,7 +41,7 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
 ---
 
-## 1. Arduino nano
+## Arduino nano
 
   - **Conexión** 
 
