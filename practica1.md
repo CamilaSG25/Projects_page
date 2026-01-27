@@ -19,12 +19,11 @@ En esta sección explicaremos lo que se realizo en nuestra primera práctica.
 
 ---
 
-## Blink con Arduino Uno / Nano
+## Blink con Arduino Uno
 
 - **Objetivo**  
   Implementar un programa básico en la plataforma Arduino que permita el encendido y apagado periódico del LED integrado en la placa, con el fin de verificar la correcta comunicación entre el entorno de desarrollo (Arduino IDE) y la placa de control
 
-  ![Arduino UNO](assets/img/arduino.jpg)
 
 - **Conexión**  
   La comunicación entre la computadora y la placa Arduino Uno/Nano se realizó mediante comunicación serial por USB. Este tipo de comunicación permite la transferencia de datos y programas
@@ -37,13 +36,13 @@ En esta sección explicaremos lo que se realizo en nuestra primera práctica.
 
   Una vez configurados la placa y el puerto, el programa fue compilado y cargado correctamente en el microcontrolador mediante el botón de carga del entorno de desarrollo.
 
-  ![CNC Shield V3](assets/img/conexion_arduino.jpeg)
+  ![arduino uno conexión](assets/img/conexion_arduino.jpeg)
 
-- **Codigo** 
+- **Código** 
 Dentro de la función setup(), se configuró el pin del LED como salida mediante la instrucción pinMode. En la función loop(), se implementó la lógica de encendido y apagado del LED utilizando las instrucciones digitalWrite, acompañadas de retardos temporales de 500 milisegundos mediante la función delay()
 
 
-  ![Drivers A4988](assets/img/Programa_arduino.jpeg)
+  ![Arduino uno programa](assets/img/Programa_arduino.jpeg)
 
 - **Video funcionando**  
     <video controls width="640">
@@ -51,39 +50,36 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
       Tu navegador no soporta video HTML5.
     </video>
 
-  ![Motores NEMA 17](assets/img/motor.png)
-
-- **Fuente de 12–24 V** para los motores  
-  Alimenta los drivers y, por lo tanto, los motores. El Arduino se alimenta por USB.
-
-  ![Fuente DC](assets/img/fuente.jpg)
-
-- **Finales de carrera** (opcional)  
-  Interruptores que permiten detectar los límites físicos para homing y protección.
-
-  ![Finales de carrera](assets/img/switch.jpg)
-
 ---
 
-## 1. Montaje del CNC Shield y drivers
+## 1. Arduino nano
 
-1. Inserta el **CNC Shield V3** sobre el Arduino UNO alineando todos los pines.  
-   Debe entrar suave, sin forzar.
+  - **Conexión** 
+  Al igual que en el Arduino Uno, la comunicación USB es convertida internamente a comunicación serial UART mediante un convertidor USB–Serial integrado en la placa Arduino Nano
 
-2. Coloca los **drivers A4988** en los zócalos de X, Y, Z:
-   - Verifica la **orientación correcta** (pines EN, STEP, DIR, VDD, GND deben coincidir con la serigrafía de la shield).
-   - Normalmente el **potenciómetro** del driver queda orientado hacia el conector de alimentación de la shield.
+  Para realizar la programación de la placa Arduino Nano, se llevaron a cabo los siguientes pasos en el entorno de desarrollo Arduino IDE:
 
-   ![CNC Shield y drivers](assets/img/shield_conectado.jpg)
+  Se seleccionó la placa Arduino Nano desde el menú Herramientas → Placa.
 
-3. Debajo de cada driver (X, Y, Z) coloca **tres jumpers** de microstepping:
-   - MS1, MS2, MS3 → colocados → configurados para **1/16 de paso** (en A4988).
-   - Esto hace que los movimientos sean más suaves y precisos, a costa de requerir más pasos por milímetro.
-   - **Nota:** Si no colocas los jumpers, el paso sera completo y la máquina avanzará más rápido **con el mismo G-code**, pero tendrás **menor resolución** y movimientos más bruscos.
+  Se eligió el puerto serial correspondiente desde Herramientas → Puerto, identificado como un puerto USB (por ejemplo, COM5).
 
-   ![Jumpers de microstepping](assets/img/jumper.jpg)
+  Una vez configurados la placa y el puerto, se procedió a compilar y cargar el programa en el microcontrolador.
 
-> ⚠️ No insertes ni retires drivers A4988 con la fuente energizada. Siempre apaga y desconecta la alimentación antes de manipularlos.
+  ![arduino nano conexión](assets/img/conexion_nano.jpeg)
+
+  - **Código** 
+
+  El programa desarrollado tiene como finalidad controlar el encendido y apagado del LED integrado en la placa Arduino Nano, identificado como LED_BUILTIN.
+
+En la función setup(), se configuró el pin del LED como salida digital mediante la instrucción pinMode. Posteriormente, en la función loop(), se implementó una secuencia cíclica en la cual el LED se enciende y apaga utilizando la instrucción digitalWrite, incorporando retardos de tiempo mediante la función delay() para controlar la velocidad del parpadeo.
+
+![arduino nano código](assets/img/cod_nano.png)
+
+- **Video funcionando**  
+    <video controls width="640">
+      <source src="{{ '/assets/img/nano.mp4' | relative_url }}" type="video/mp4">
+      Tu navegador no soporta video HTML5.
+    </video>
 
 ---
 
