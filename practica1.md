@@ -6,7 +6,7 @@ nav_order: 2
 
 # Práctica 1
 
-En esta sección se describen las conexiones físicas básicas para una CNC de 3 ejes basada en:
+En esta sección explicaremos lo que se realizo en nuestra primera práctica.
 
 - Arduino UNO  
 - CNC Shield V3  
