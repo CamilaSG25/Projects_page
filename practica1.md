@@ -6,24 +6,13 @@ nav_order: 2
 
 # Práctica 1
 
-En esta sección explicaremos lo que se realizo en nuestra primera práctica.
+  En la presente práctica se realizó la implementación del programa básico Blink en distintas placas de desarrollo con el objetivo de verificar su correcto funcionamiento, así como comprobar la comunicación entre el entorno de desarrollo y el microcontrolador. El programa Blink consiste en el encendido y apagado periódico de un LED, lo cual permite validar de manera sencilla las salidas digitales, la carga del código y la correcta configuración de la placa utilizada.
 
-- Arduino UNO  
-- CNC Shield V3  
-- Drivers A4988 (o similares)  
-- Motores NEMA 17  
-- Fuente DC de 12–24 V  
-- Finales de carrera (opcional, pero recomendable)
-
-> ⚠️ **Seguridad:** antes de conectar o desconectar motores, drivers o fuente de alimentación, asegúrate de que todo está apagado y la fuente desconectada.
+  Para el desarrollo de la práctica se emplearon diversas plataformas de control, entre las que se incluyen Arduino Uno y Arduino Nano (ATmega328), ESP32 DevKit V1 (ESP32-WROOM-32), XIAO ESP32S3 Sense y XIAO RP2040. Cada una de estas placas presenta características particulares en cuanto a arquitectura, capacidad de procesamiento y método de comunicación, lo que permitió comparar su comportamiento y proceso de configuración dentro del entorno de programación.
 
 ---
 
 ## Blink con Arduino Uno
-
-- **Objetivo**  
-  Implementar un programa básico en la plataforma Arduino que permita el encendido y apagado periódico del LED integrado en la placa, con el fin de verificar la correcta comunicación entre el entorno de desarrollo (Arduino IDE) y la placa de control
-
 
 - **Conexión**  
   La comunicación entre la computadora y la placa Arduino Uno/Nano se realizó mediante comunicación serial por USB. Este tipo de comunicación permite la transferencia de datos y programas
@@ -55,25 +44,26 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 ## 1. Arduino nano
 
   - **Conexión** 
-  Al igual que en el Arduino Uno, la comunicación USB es convertida internamente a comunicación serial UART mediante un convertidor USB–Serial integrado en la placa Arduino Nano
 
-  Para realizar la programación de la placa Arduino Nano, se llevaron a cabo los siguientes pasos en el entorno de desarrollo Arduino IDE:
+    Al igual que en el Arduino Uno, la comunicación USB es convertida internamente a comunicación serial UART mediante un convertidor USB–Serial integrado en la placa Arduino Nano
 
-  Se seleccionó la placa Arduino Nano desde el menú Herramientas → Placa.
+    Para realizar la programación de la placa Arduino Nano, se llevaron a cabo los siguientes pasos en el entorno de desarrollo Arduino IDE:
 
-  Se eligió el puerto serial correspondiente desde Herramientas → Puerto, identificado como un puerto USB (por ejemplo, COM5).
+    Se seleccionó la placa Arduino Nano desde el menú Herramientas → Placa.
 
-  Una vez configurados la placa y el puerto, se procedió a compilar y cargar el programa en el microcontrolador.
+    Se eligió el puerto serial correspondiente desde Herramientas → Puerto, identificado como un puerto USB (por ejemplo, COM5).
 
-  ![arduino nano conexión](assets/img/conexion_nano.jpeg)
+    Una vez configurados la placa y el puerto, se procedió a compilar y cargar el programa en el microcontrolador.
+
+    ![arduino nano conexión](assets/img/conexion_nano.jpeg)
 
   - **Código** 
 
-  El programa desarrollado tiene como finalidad controlar el encendido y apagado del LED integrado en la placa Arduino Nano, identificado como LED_BUILTIN.
+    El programa desarrollado tiene como finalidad controlar el encendido y apagado del LED integrado en la placa Arduino Nano, identificado como LED_BUILTIN.
 
-En la función setup(), se configuró el pin del LED como salida digital mediante la instrucción pinMode. Posteriormente, en la función loop(), se implementó una secuencia cíclica en la cual el LED se enciende y apaga utilizando la instrucción digitalWrite, incorporando retardos de tiempo mediante la función delay() para controlar la velocidad del parpadeo.
+    En la función setup(), se configuró el pin del LED como salida digital mediante la instrucción pinMode. Posteriormente, en la función loop(), se implementó una secuencia cíclica en la cual el LED se enciende y apaga utilizando la instrucción digitalWrite, incorporando retardos de tiempo mediante la función delay() para controlar la velocidad del parpadeo.
 
-![arduino nano código](assets/img/cod_nano.png)
+  ![arduino nano código](assets/img/cod_nano.png)
 
 - **Video funcionando**  
     <video controls width="640">
