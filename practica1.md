@@ -146,9 +146,9 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
 - **Conexión**  
 
-  Para la programación de la placa XIAO RP2040 se utilizó el entorno Thonny, configurado para trabajar con **MicroPython**. Dentro de las opciones del intérprete se seleccionó MicroPython (RP2040) y se habilitó la detección automática del puerto serial correspondiente a la placa.
+  Para la programación de la placa XIAO RP2040 se utilizó el entorno Thonny, configurado para trabajar con MicroPython. Dentro de las opciones del intérprete se seleccionó MicroPython (RP2040) y se habilitó la detección automática del puerto serial correspondiente a la placa.
 
-  Debido a las características del microcontrolador RP2040, fue necesario instalar el firmware de MicroPython mediante el método UF2. Para ello, la placa se conectó al equipo mientras se mantenía presionado el botón BOOTSEL, lo que permitió que fuera reconocida como una unidad de almacenamiento. Desde Thonny, se seleccionó la opción *Install or update MicroPython*, eligiendo la familia RP2 y la variante Raspberry Pi Pico / Pico H, completando así la instalación del firmware.
+  Debido a las características del microcontrolador RP2040, fue necesario instalar el firmware de MicroPython mediante el método UF2. Para ello, la placa se conectó al equipo mientras se mantenía presionado el botón BOOTSEL, lo que permitió que fuera reconocida como una unidad de almacenamiento. Desde Thonny, se seleccionó la opción Install or update MicroPython, eligiendo la familia RP2 y la variante Raspberry Pi Pico / Pico H, completando así la instalación del firmware.
 
   Posteriormente, en la configuración del intérprete, se seleccionó MicroPython (Raspberry Pi Pico) y el puerto correspondiente a la placa (Board CDC @ COM16), permitiendo la correcta comunicación entre el entorno de desarrollo y el dispositivo.
 
@@ -160,9 +160,9 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
 - **Código**  
 
-  El programa fue desarrollado en **MicroPython** y tiene como objetivo realizar el parpadeo del LED integrado en la placa XIAO RP2040, utilizando programación directa sobre el microcontrolador.
+  El programa fue desarrollado en MicroPython y tiene como objetivo realizar el parpadeo del LED integrado en la placa XIAO RP2040, utilizando programación directa sobre el microcontrolador.
 
-  En el código se importan las bibliotecas machine y time, las cuales permiten el control de los pines digitales y la gestión de retardos de tiempo, respectivamente. El pin correspondiente al LED se configuró como salida digital mediante la instrucción `Pin`.
+  En el código se importan las bibliotecas machine y time, las cuales permiten el control de los pines digitales y la gestión de retardos de tiempo, respectivamente. El pin correspondiente al LED se configuró como salida digital mediante la instrucción Pin.
 
   La estructura while True permite que el parpadeo del LED se ejecute de manera continua, incorporando retardos de 0.5 segundos para controlar la frecuencia de encendido y apagado.
 
