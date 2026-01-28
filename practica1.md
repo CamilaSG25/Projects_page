@@ -142,6 +142,42 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
 ---
 
+## XIAO RP2040
+
+- **Conexión**  
+
+  Para la programación de la placa XIAO RP2040 se utilizó el entorno **Thonny**, configurado para trabajar con **MicroPython**. Dentro de las opciones del intérprete se seleccionó **MicroPython (RP2040)** y se habilitó la detección automática del puerto serial correspondiente a la placa.
+
+  Debido a las características del microcontrolador RP2040, fue necesario instalar el firmware de MicroPython mediante el método **UF2**. Para ello, la placa se conectó al equipo mientras se mantenía presionado el botón **BOOTSEL**, lo que permitió que fuera reconocida como una unidad de almacenamiento. Desde Thonny, se seleccionó la opción *Install or update MicroPython*, eligiendo la familia **RP2** y la variante **Raspberry Pi Pico / Pico H**, completando así la instalación del firmware.
+
+  Posteriormente, en la configuración del intérprete, se seleccionó **MicroPython (Raspberry Pi Pico)** y el puerto correspondiente a la placa (**Board CDC @ COM16**), permitiendo la correcta comunicación entre el entorno de desarrollo y el dispositivo.
+
+  ![xiaorp2040 conexión](assets/img/foto_pequeña.jpg)
+
+  ![xiaorp2040 conexión 2](assets/img/foto_xiaorp2040_1.jpg)
+
+  ![xiaorp2040 conexión 3](assets/img/foto_xiaorp2040_2.jpg)
+
+- **Código**  
+
+  El programa fue desarrollado en **MicroPython** y tiene como objetivo realizar el parpadeo del LED integrado en la placa XIAO RP2040, utilizando programación directa sobre el microcontrolador.
+
+  En el código se importan las bibliotecas `machine` y `time`, las cuales permiten el control de los pines digitales y la gestión de retardos de tiempo, respectivamente. El pin correspondiente al LED se configuró como salida digital mediante la instrucción `Pin`.
+
+  La estructura `while True` permite que el parpadeo del LED se ejecute de manera continua, incorporando retardos de 0.5 segundos para controlar la frecuencia de encendido y apagado.
+
+  ![xiaorp2040 código](assets/img/cod_xiaorp2040.jpg)
+
+- **Video funcionando**  
+
+  <video controls width="640">
+    <source src="{{ '/assets/img/video_xiaorp2040.mp4' | relative_url }}" type="video/mp4">
+    Tu navegador no soporta video HTML5.
+  </video>
+
+---
+
+
 ## Siguiente sección
 
 [Software (GRBL + OpenBuilds)](software.md)
