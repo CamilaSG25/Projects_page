@@ -79,7 +79,7 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
 ## ESP32‑WROOM‑32
 
-  - **Conexión 3**
+  - **Conexión **
 
     Para la correcta programación de la placa ESP32-WROOM-32, se realizaron los siguientes pasos en el Arduino IDE
 
@@ -136,7 +136,7 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
 - **Video funcionando**  
     <video controls width="640">
-      <source src="{{ '/assets/img/nano.mp4' | relative_url }}" type="video/mp4">
+      <source src="{{ '/assets/img/sense_video.mp4' | relative_url }}" type="video/mp4">
       Tu navegador no soporta video HTML5.
     </video>
 
