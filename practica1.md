@@ -79,7 +79,7 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
 ## ESP32‑WROOM‑32
 
-  **Conexión**
+  -**Conexión**
 
     Para la correcta programación de la placa ESP32-WROOM-32, se realizaron los siguientes pasos en el Arduino IDE
 
@@ -89,15 +89,23 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
     Una vez configurados la placa y el puerto, se procedió a compilar y cargar el programa en el microcontrolador.
 
-     ![ ESP32‑WROOM‑32 conexión](assets/img/wroom.jpeg)
+    ![SP32‑WROOM‑32 conexión](assets/img/wroom.jpeg)
 
-  > ✅ **Recomendación:** usa cables adecuados para la corriente (por ejemplo, 18–20 AWG para 3–5 A) y aprieta bien los tornillos de la bornera.
+  - **Código** 
+  El programa desarrollado tiene como objetivo realizar el parpadeo del LED integrado en la placa ESP32-WROOM-32, el cual se encuentra conectado al pin digital 2.
 
-  > 🔎 **Verificación:** antes de conectar los motores, mide con un multímetro el voltaje en la bornera:
-  > - Polaridad correcta.
-  > - Voltaje dentro del rango esperado.
+  Debido a que en algunas configuraciones del ESP32 el pin del LED integrado no se encuentra definido por defecto, se utilizó una directiva de preprocesador (#ifdef) para definir el pin correspondiente (LED_BUILTIN) únicamente en caso de que no estuviera previamente declarado.
 
-  ![Conexión de fuente a la shield](assets/img/fuente_c.jpg)
+  En la función setup(), el pin del LED se configuró como salida digital mediante la instrucción pinMode. Posteriormente, en la función loop(), se implementó una secuencia cíclica en la que el LED se enciende y apaga de manera alternada utilizando la instrucción digitalWrite, incorporando retardos de 500 milisegundos con la función delay() para controlar la frecuencia del parpadeo
+
+  ![wroom cod](assets/img/wroom_cod.jpeg)
+
+  - **Video funcionando**  
+    <video controls width="640">
+      <source src="{{ '/assets/img/video_wroom.mp4' | relative_url }}" type="video/mp4">
+      Tu navegador no soporta video HTML5.
+    </video>
+
 
 ---
 
