@@ -175,6 +175,100 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
 ---
 
+## Impresión de PCB
+
+  - **Diseño** 
+
+    Una vez concluido el aprendizaje sobre el uso y programación de cada uno de los microcontroladores empleados en la práctica, se procedió al diseño de una tarjeta de circuito impreso (PCB) para uno de ellos. En este caso, se seleccionó la XIAO ESP32S3 Sense.
+
+    Para ello, se desarrolló el diseño del PCB utilizando el software KiCad, con el objetivo de integrar varios LEDs que serían montados directamente sobre la tarjeta. Asimismo, se incluyeron pines de conexión adicionales, los cuales permitirán posteriormente la implementación de distintos tipos de comunicación y la conexión de periféricos externos con la placa XIAO.
+
+    ![diseño de pcb](assets/img/diseño de pcb.png)
+
+    
+    ![diseño rojo](assets/img/diseño de pcb rojo.jpeg)
+
+  - **Impresión** 
+
+  ![arduino nano conexión](assets/img/pcb impresa.jpeg)
+
+  A continuación se coloca el codigo que se utilizo para el encendido de los leds. Este fue programado en la aplicación arduino IDE.
+
+        // Pines
+      const int led0 = D0;
+      const int led1 = D1;
+      const int led2 = D2;
+      const int buttonPin = D3;
+
+      // Variables
+      int pulseCount = 0;
+      bool lastButtonState = HIGH;
+      bool currentButtonState;
+
+      unsigned long lastDebounceTime = 0;
+      const unsigned long debounceDelay = 50;
+
+      void setup() {
+        pinMode(led0, OUTPUT);
+        pinMode(led1, OUTPUT);
+        pinMode(led2, OUTPUT);
+
+        pinMode(buttonPin, INPUT_PULLUP); // botón a GND
+
+        // Apagar todo al inicio
+        digitalWrite(led0, LOW);
+        digitalWrite(led1, LOW);
+        digitalWrite(led2, LOW);
+      }
+
+      void loop() {
+        bool reading = digitalRead(buttonPin);
+
+        // Antirrebote
+        if (reading != lastButtonState) {
+          lastDebounceTime = millis();
+        }
+
+        if ((millis() - lastDebounceTime) > debounceDelay) {
+          if (reading != currentButtonState) {
+            currentButtonState = reading;
+
+            // Detectar flanco de bajada (botón presionado)
+            if (currentButtonState == LOW) {
+              pulseCount++;
+
+              if (pulseCount == 1) {
+                digitalWrite(led0, HIGH);
+              } 
+              else if (pulseCount == 2) {
+                digitalWrite(led1, HIGH);
+              } 
+              else if (pulseCount == 3) {
+                digitalWrite(led2, HIGH);
+              } 
+              else if (pulseCount == 4) {
+                // RESET
+                digitalWrite(led0, LOW);
+                digitalWrite(led1, LOW);
+                digitalWrite(led2, LOW);
+                pulseCount = 0;
+              }
+            }
+          }
+        }
+
+        lastButtonState = reading;
+      }
+
+
+- **Video funcionando**  
+    <video controls width="640">
+      <source src="{{ '/assets/img/video_pcb.mp4' | relative_url }}" type="video/mp4">
+      Tu navegador no soporta video HTML5.
+    </video>
+
+---
+
 ## Siguiente sección
 
 [Software (GRBL + OpenBuilds)](software.md)
