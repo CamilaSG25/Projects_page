@@ -28,9 +28,9 @@ Para cada protocolo se documentan las **conexiones físicas**, los **códigos** 
     gracias al divisor se obtuvo un voltaje seguro de ~3.4v
 
 
-  ![UART conexión ](/workspaces/Projects_page/assets/img/Conexion_UART1.jpeg)
+  ![UART conexión ](assets/img/Conexion_UART1.jpeg)
 
-  ![UART conexión 2](/workspaces/Projects_page/assets/img/Conexion_UART2.jpeg)
+  ![UART conexión 2](assets/img/Conexion_UART2.jpeg)
 
     ## UART Arduino UNO
 
@@ -276,7 +276,7 @@ void loop() {
    ### Resultados
       A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación UART en Arduino UNO
 
-  ![UART grafica ARDUINO](/workspaces/Projects_page/assets/img/Grafica_UART_Arduino.jpeg)
+  ![UART grafica ARDUINO](assets/img/Grafica_UART_Arduino.jpeg)
 
       En la gráfica se observa que al inicio la latencia de los mensajes UART es menor, pero cambia hasta llegar a un valor  estable cercano a 1200 µs. Este comportamiento ocurre porque, en los primeros mensajes, el sistema acaba de arrancar y los buffers de comunicación todavía están vacíos, por lo que los mensajes se procesan más rápido.
 
@@ -443,7 +443,7 @@ void loop() {
    ### Resultados
       A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación UART en XIAO ESP32-S3
 
-  ![UART Grafica XIAO](/workspaces/Projects_page/assets/img/Grafica_UART_XIAO.jpeg)
+  ![UART Grafica XIAO](assets/img/Grafica_UART_XIAO.jpeg)
 
     En esta práctica se evaluó el protocolo UART en la XIAO ESP32-S3 mediante comunicación ping-pong. Los resultados muestran una latencia promedio de ~149 µs y una baja variación (1.89 µs), lo que indica una comunicación rápida y estable.
 
@@ -457,9 +457,9 @@ void loop() {
     Con 2 resistencias de 470ohms
 
 
-   ![I2C conexión ](/workspaces/Projects_page/assets/img/Conexion_I2C1.jpeg)
+   ![I2C conexión ](assets/img/Conexion_I2C1.jpeg)
 
-   ![I2C conexión 2](/workspaces/Projects_page/assets/img/Conexion_I2C2.jpeg)
+   ![I2C conexión 2](assets/img/Conexion_I2C2.jpeg)
 
     ## I2C Arduino UNO
 
@@ -602,7 +602,7 @@ void loop() {
      ### Resultados
       A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación I2C en XIAO ESP32-S3
 
-  ![I2C grafica arduino](/workspaces/Projects_page/assets/img/Grafica_I2C_Arduino.jpeg)
+  ![I2C grafica arduino](assets/img/Grafica_I2C_Arduino.jpeg)
 
     En la gráfica se observa que al inicio la latencia de los mensajes UART es menor, pero cambia hasta llegar a un valor  estable cercano a 1200 µs. Este comportamiento ocurre porque, en los primeros mensajes, el sistema acaba de arrancar y los buffers de comunicación todavía están vacíos, por lo que los mensajes se procesan más rápido.
 
@@ -709,16 +709,11 @@ void loop() {
   ### Resultados
   A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación UART en XIAO ESP32-S3
 
-  ![I2C grafica XIAO](/workspaces/Projects_page/assets/img/Grafica_I2C_XIAO.jpeg)
+  ![I2C grafica XIAO](assets/img/Grafica_I2C_XIAO.jpeg)
 
   En esta práctica se evaluó el protocolo UART en la XIAO ESP32-S3 mediante comunicación ping-pong. Los resultados muestran una latencia promedio de ~149 µs y una baja variación (1.89 µs), lo que indica una comunicación rápida y estable.
 
   La mayoría de las mediciones se concentran en un rango estrecho, confirmando la confiabilidad del sistema. En comparación con el Arduino UNO, la XIAO ESP32-S3 presenta un mejor desempeño, por lo que UART en esta plataforma es adecuado para aplicaciones embebidas que requieren baja latencia.
-
-
-
-
-
 
 
 
@@ -730,13 +725,13 @@ void loop() {
     Con 2 resistencias de 470ohms
 
 
-   ![I2C conexión ](/workspaces/Projects_page/assets/img/Conexion_I2C1.jpeg)
+   ![I2C conexión ](assets/img/Conexion_SPI1.jpeg)
 
-   ![I2C conexión 2](/workspaces/Projects_page/assets/img/Conexion_I2C2.jpeg)
+   ![I2C conexión 2](assets/img/Conexion_SPI2.jpeg)
 
     ## I2C Arduino UNO
 
-      -**Medir latencia de comunicacion I2C desde Arduino UNO
+      -**Medir latencia de comunicacion SPI desde Arduino UNO
 
       - **Código (Arduino UNO )**
 
@@ -875,7 +870,7 @@ void loop() {
      ### Resultados
       A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación I2C en XIAO ESP32-S3
 
-  ![I2C grafica arduino](/workspaces/Projects_page/assets/img/Grafica_I2C_Arduino.jpeg)
+  ![I2C grafica arduino](assets/img/Grafica_SPI_Arduino.jpeg)
 
     En la gráfica se observa que al inicio la latencia de los mensajes UART es menor, pero cambia hasta llegar a un valor  estable cercano a 1200 µs. Este comportamiento ocurre porque, en los primeros mensajes, el sistema acaba de arrancar y los buffers de comunicación todavía están vacíos, por lo que los mensajes se procesan más rápido.
 
@@ -982,7 +977,7 @@ void loop() {
   ### Resultados
   A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación UART en XIAO ESP32-S3
 
-  ![I2C grafica XIAO](/workspaces/Projects_page/assets/img/Grafica_I2C_XIAO.jpeg)
+  ![I2C grafica XIAO](Grafica_SPI_XIAO.jpeg)
 
   En esta práctica se evaluó el protocolo UART en la XIAO ESP32-S3 mediante comunicación ping-pong. Los resultados muestran una latencia promedio de ~149 µs y una baja variación (1.89 µs), lo que indica una comunicación rápida y estable.
 
