@@ -16,7 +16,6 @@ Este sitio documenta una **CNC de 3 ejes** basada en:
 ## Contenidos
 
 1. [Práctica 1](practica1.md)  
-# 2. [Práctica 2](practica2.md)
 2. [Software (GRBL + OpenBuilds)](software.md)  
 3. [Práctica 3](practica3.md)
 4. [Primer archivo G-code (.nc)](primer-gcode.md) 

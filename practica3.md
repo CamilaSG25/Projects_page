@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Práctica 3
-nav_order: 2
+nav_order: 3
 ---
 
 # Práctica 3
