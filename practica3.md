@@ -271,4 +271,4 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
 ## Siguiente sección
 
-[Software (GRBL + OpenBuilds)](software.md)
+[Primer archivo G-code (.nc)](primer-gcode.md)
