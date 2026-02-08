@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Práctica 1
+title: Práctica 3
 nav_order: 2
 ---
 
