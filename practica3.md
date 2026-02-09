@@ -6,269 +6,163 @@ nav_order: 4
 
 # Práctica 3
 
-  En la presente práctica se realizó la implementación del programa básico Blink en distintas placas de desarrollo con el objetivo de verificar su correcto funcionamiento, así como comprobar la comunicación entre el entorno de desarrollo y el microcontrolador. El programa Blink consiste en el encendido y apagado periódico de un LED, lo cual permite validar de manera sencilla las salidas digitales, la carga del código y la correcta configuración de la placa utilizada.
-
-  Para el desarrollo de la práctica se emplearon diversas plataformas de control, entre las que se incluyen Arduino Uno y Arduino Nano (ATmega328), ESP32 DevKit V1 (ESP32-WROOM-32), XIAO ESP32S3 Sense y XIAO RP2040. Cada una de estas placas presenta características particulares en cuanto a arquitectura, capacidad de procesamiento y método de comunicación, lo que permitió comparar su comportamiento y proceso de configuración dentro del entorno de programación.
+  En la presente práctica se realizó la comunicación serial entre una computadora personal y una placa XIAO ESP32S3 utilizando MicroPython y una interfaz gráfica desarrollada en Python con Tkinter. El objetivo principal fue establecer un sistema de interacción bidireccional que permitiera tanto la lectura de un botón físico conectado a la placa como el control de un actuador (LED) desde una interfaz gráfica en la computadora.
 
 ---
 
-## Blink con Arduino Uno
-
-- **Conexión**  
-  La comunicación entre la computadora y la placa Arduino Uno/Nano se realizó mediante comunicación serial por USB. Este tipo de comunicación permite la transferencia de datos y programas
-
-  Para establecer correctamente la comunicación entre la computadora y la placa Arduino, se realizaron los siguientes pasos dentro del Arduino IDE:
-
-  Se seleccionó el modelo de la placa utilizada (Arduino Uno o Arduino Nano) desde el menú Herramientas → Placa.
-
-  Se identificó y seleccionó el puerto de comunicación correspondiente desde Herramientas → Puerto, el cual aparece como un puerto serial (por ejemplo, COM8).
-
-  Una vez configurados la placa y el puerto, el programa fue compilado y cargado correctamente en el microcontrolador mediante el botón de carga del entorno de desarrollo.
-
-  ![arduino uno conexión](assets/img/conexion_arduino.jpeg)
-
-- **Código** 
-Dentro de la función setup(), se configuró el pin del LED como salida mediante la instrucción pinMode. En la función loop(), se implementó la lógica de encendido y apagado del LED utilizando las instrucciones digitalWrite, acompañadas de retardos temporales de 500 milisegundos mediante la función delay()
-
-
-  ![Arduino uno programa](assets/img/Programa_arduino.jpeg)
-
-- **Video funcionando**  
-    <video controls width="640">
-      <source src="{{ '/assets/img/arduino.mp4' | relative_url }}" type="video/mp4">
-      Tu navegador no soporta video HTML5.
-    </video>
-
----
-
-## Arduino nano
-
-  - **Conexión** 
-
-    Al igual que en el Arduino Uno, la comunicación USB es convertida internamente a comunicación serial UART mediante un convertidor USB–Serial integrado en la placa Arduino Nano
-
-    Para realizar la programación de la placa Arduino Nano, se llevaron a cabo los siguientes pasos en el entorno de desarrollo Arduino IDE:
-
-    Se seleccionó la placa Arduino Nano desde el menú Herramientas → Placa.
-
-    Se eligió el puerto serial correspondiente desde Herramientas → Puerto, identificado como un puerto USB (por ejemplo, COM5).
-
-    Una vez configurados la placa y el puerto, se procedió a compilar y cargar el programa en el microcontrolador.
-
-    ![arduino nano conexión](assets/img/conexion_nano.jpeg)
-
-    Durante la programación del Arduino Nano, fue necesario ajustar la configuración del procesador debido a que se utilizó una versión antigua de la placa. Para ello, en el Arduino IDE se seleccionó la opción ATmega328P (Old Bootloader) desde el menú Herramientas → Procesador.
-
-    ![arduino nano conexión](assets/img/nano_viejo.jpeg)
-
-  - **Código** 
-
-    El programa desarrollado tiene como finalidad controlar el encendido y apagado del LED integrado en la placa Arduino Nano, identificado como LED_BUILTIN.
-
-    En la función setup(), se configuró el pin del LED como salida digital mediante la instrucción pinMode. Posteriormente, en la función loop(), se implementó una secuencia cíclica en la cual el LED se enciende y apaga utilizando la instrucción digitalWrite, incorporando retardos de tiempo mediante la función delay() para controlar la velocidad del parpadeo.
-
-  ![arduino nano código](assets/img/cod nano.png)
-
-- **Video funcionando**  
-    <video controls width="640">
-      <source src="{{ '/assets/img/nano.mp4' | relative_url }}" type="video/mp4">
-      Tu navegador no soporta video HTML5.
-    </video>
-
----
-
-## ESP32‑WROOM‑32
-
-  - **Conexión **
-
-    Para la correcta programación de la placa ESP32-WROOM-32, se realizaron los siguientes pasos en el Arduino IDE
-
-    Se seleccionó la placa ESP32-WROOM-DA Module desde el menú Herramientas → Placa, correspondiente al módulo utilizado en la práctica.
-
-    Se eligió el puerto de comunicación serial asignado a la placa desde Herramientas → Puerto, identificado como un puerto USB (por ejemplo, COM10).
-
-    Una vez configurados la placa y el puerto, se procedió a compilar y cargar el programa en el microcontrolador.
-
-    ![SP32‑WROOM‑32 conexión](assets/img/wroom.jpeg)
-
-  - **Código** 
-
-  El programa desarrollado tiene como objetivo realizar el parpadeo del LED integrado en la placa ESP32-WROOM-32, el cual se encuentra conectado al pin digital 2.
-
-  Debido a que en algunas configuraciones del ESP32 el pin del LED integrado no se encuentra definido por defecto, se utilizó una directiva de preprocesador (#ifdef) para definir el pin correspondiente (LED_BUILTIN) únicamente en caso de que no estuviera previamente declarado.
-
-  En la función setup(), el pin del LED se configuró como salida digital mediante la instrucción pinMode. Posteriormente, en la función loop(), se implementó una secuencia cíclica en la que el LED se enciende y apaga de manera alternada utilizando la instrucción digitalWrite, incorporando retardos de 500 milisegundos con la función delay() para controlar la frecuencia del parpadeo
-
-  ![wroom cod](assets/img/wroom_cod.jpeg)
-
-  - **Video funcionando**  
-
-    <video controls width="640">
-      <source src="{{ '/assets/img/video_wroom.mp4' | relative_url }}" type="video/mp4">
-      Tu navegador no soporta video HTML5.
-    </video>
-
-
----
-
-## XIAO ESP32S3 Sense
-
-  - **Conexión** 
-
-    Para la programación de la placa se utilizó el entorno Thonny, configurado para trabajar con MicroPython. Dentro de las opciones del intérprete se seleccionó MicroPython (ESP32) y se habilitó la detección automática del puerto serial correspondiente a la placa.
-
-    Debido a las características del dispositivo, fue necesario instalar el firmware de MicroPython para ESP32-S3 utilizando la herramienta integrada en Thonny. Durante este proceso se seleccionó el puerto serial asignado a la placa y la versión correspondiente del firmware, permitiendo que el dispositivo quedara listo para ejecutar scripts en MicroPython.
-
-    ![sense conexión](assets/img/conexion_sense_1.jpeg)
-
-    ![sense conexión2](assets/img/conexion_sense_2.jpeg)
-
-  - **Código** 
-
-    El programa fue desarrollado en MicroPython y tiene como objetivo realizar el parpadeo del LED integrado en la placa XIAO ESP32S3 Sense, utilizando programación directa sobre el microcontrolador.
-
-    En el código se importan las bibliotecas machine y time, las cuales permiten el control de los pines digitales y la gestión de retardos de tiempo, respectivamente. El pin correspondiente al LED se configuró como salida digital mediante la instrucción Pin.
-
-    Debido a las características de la placa, el LED opera en configuración activo-bajo, por lo que un valor lógico bajo (0) enciende el LED, mientras que un valor lógico alto (1) lo apaga. La estructura while True permite que el parpadeo del LED se ejecute de manera continua, incorporando retardos de 0.5 segundos para controlar la frecuencia de encendido y apagado.
-
-    ![sense cod](assets/img/cod sense.jpeg)
-
-
-- **Video funcionando**  
-    <video controls width="640">
-      <source src="{{ '/assets/img/sense_video.mp4' | relative_url }}" type="video/mp4">
-      Tu navegador no soporta video HTML5.
-    </video>
-
----
-
-## XIAO RP2040
-
-- **Conexión**  
-
-  Para la programación de la placa XIAO RP2040 se utilizó el entorno Thonny, configurado para trabajar con MicroPython. Dentro de las opciones del intérprete se seleccionó MicroPython (RP2040) y se habilitó la detección automática del puerto serial correspondiente a la placa.
-
-  Debido a las características del microcontrolador RP2040, fue necesario instalar el firmware de MicroPython mediante el método UF2. Para ello, la placa se conectó al equipo mientras se mantenía presionado el botón BOOTSEL, lo que permitió que fuera reconocida como una unidad de almacenamiento. Desde Thonny, se seleccionó la opción Install or update MicroPython, eligiendo la familia RP2 y la variante Raspberry Pi Pico / Pico H, completando así la instalación del firmware.
-
-  Posteriormente, en la configuración del intérprete, se seleccionó MicroPython (Raspberry Pi Pico) y el puerto correspondiente a la placa (Board CDC @ COM16), permitiendo la correcta comunicación entre el entorno de desarrollo y el dispositivo.
-
-  ![xiaorp2040 conexión](assets/img/foto_pequeña.jpg)
-
-  ![xiaorp2040 conexión 2](assets/img/Foto_xiaorp2040_1.jpg)
-
-  ![xiaorp2040 conexión 3](assets/img/Foto_xiaorp2040_2.jpg)
+## Codigo generado en Thonny con Tkinter para interfaz gráfica
 
 - **Código**  
 
-  El programa fue desarrollado en MicroPython y tiene como objetivo realizar el parpadeo del LED integrado en la placa XIAO RP2040, utilizando programación directa sobre el microcontrolador.
 
-  En el código se importan las bibliotecas machine y time, las cuales permiten el control de los pines digitales y la gestión de retardos de tiempo, respectivamente. El pin correspondiente al LED se configuró como salida digital mediante la instrucción Pin.
+    import tkinter as tk
+    import serial
+    import time
 
-  La estructura while True permite que el parpadeo del LED se ejecute de manera continua, incorporando retardos de 0.5 segundos para controlar la frecuencia de encendido y apagado.
+    PORT = "COM8"   # <-- cambia al COM real de tu XIAO
+    BAUD = 115200
 
-- **Video funcionando**  
+    ser = serial.Serial(PORT, BAUD, timeout=0.1)
+    time.sleep(1)
 
-  <video controls width="640">
-    <source src="{{ '/assets/img/video_xiaorp2040.mp4' | relative_url }}" type="video/mp4">
-    Tu navegador no soporta video HTML5.
-  </video>
+    root = tk.Tk()
+    root.title("XIAO: Botón + LED")
+
+    canvas = tk.Canvas(root, width=220, height=220)
+    canvas.pack(padx=10, pady=10)
+
+    circulo = canvas.create_oval(40, 40, 180, 180, fill="red")
+
+    lbl_led = tk.Label(root, text="LED D3: OFF")
+    lbl_led.pack()
+
+    def enviar(cmd):
+        ser.write((cmd + "\n").encode())
+
+    tk.Button(root, text="Toggle LED D3", command=lambda: enviar("LED3_TOGGLE")).pack(pady=10)
+
+    def leer_serial():
+        if ser.in_waiting:
+            line = ser.readline().decode(errors="ignore").strip()
+
+            # Estado del botón físico (D4)
+            if line == "ON":
+                canvas.itemconfig(circulo, fill="green")
+            elif line == "OFF":
+                canvas.itemconfig(circulo, fill="red")
+
+            # Estado del LED D3 (confirmación)
+            elif line == "LED3=ON":
+                lbl_led.config(text="LED D3: ON")
+            elif line == "LED3=OFF":
+                lbl_led.config(text="LED D3: OFF")
+
+        root.after(50, leer_serial)
+
+    leer_serial()
+    root.mainloop()
+
+  El código presentado implementa una interfaz gráfica desarrollada en Python utilizando la biblioteca Tkinter, cuya función principal es establecer comunicación serial con una placa XIAO ESP32S3 para el monitoreo y control de entradas y salidas digitales.
+
+Inicialmente, se importan las bibliotecas necesarias: tkinter para la creación de la interfaz gráfica, serial para la comunicación a través del puerto USB y time para introducir retardos que aseguren la correcta inicialización del puerto serial. Posteriormente, se configura el puerto de comunicación (COM8) y la velocidad de transmisión de datos a 115200 baudios, estableciendo la conexión serial con la placa.
+
+Una vez inicializada la comunicación, se crea la ventana principal de la interfaz gráfica, en la cual se incorporan elementos visuales como un canvas que contiene un círculo, el cual funciona como indicador del estado del botón físico conectado a la placa. Dicho círculo cambia de color de rojo a verde dependiendo de los mensajes recibidos por el puerto serial (OFF u ON).
+
+Adicionalmente, se incluye una etiqueta de texto que muestra el estado del LED conectado al pin D3, permitiendo al usuario conocer si este se encuentra encendido o apagado. Para el control del LED, se implementa un botón en la interfaz gráfica que, al ser presionado, envía un comando serial a la placa para alternar el estado del LED.
+
+La función encargada de la lectura de datos seriales se ejecuta de manera periódica mediante el método after() de Tkinter, lo cual permite recibir información de la placa sin bloquear la ejecución de la interfaz. De esta manera, se asegura una comunicación continua y en tiempo real entre la computadora y el sistema embebido.
 
 ---
 
-## Impresión de PCB
+## Codigo generado en Thonny para la programación del ESP32
 
-  - **Diseño** 
+  - **Código** 
 
-    Una vez concluido el aprendizaje sobre el uso y programación de cada uno de los microcontroladores empleados en la práctica, se procedió al diseño de una tarjeta de circuito impreso (PCB) para uno de ellos. En este caso, se seleccionó la XIAO ESP32S3 Sense.
+    from machine import Pin
+    from time import sleep
+    import sys
+    import uselect
 
-    Para ello, se desarrolló el diseño del PCB utilizando el software KiCad, con el objetivo de integrar varios LEDs que serían montados directamente sobre la tarjeta. Asimismo, se incluyeron pines de conexión adicionales, los cuales permitirán posteriormente la implementación de distintos tipos de comunicación y la conexión de periféricos externos con la placa XIAO.
+    ===== Hardware =====
+    btn = Pin(4, Pin.IN, Pin.PULL_UP)   # Botón físico en D4 (a GND)
+    led = Pin(3, Pin.OUT)               # LED en D3 (lo controla la interfaz)
 
-    ![diseño de pcb](assets/img/diseño de pcb.png)
+    ===== Estados =====
+    estado_btn = 0
+    estado_led = 0
+    last = 1
 
+    Serial no bloqueante (lee comandos de la PC)
+    poll = uselect.poll()
+    poll.register(sys.stdin, uselect.POLLIN)
+
+    print("LISTO")
+
+    while True:
+        # ---- 1) Botón físico -> ON/OFF (solo imprime) ----
+        now = btn.value()
+        if last == 1 and now == 0:
+            estado_btn ^= 1
+            print("ON" if estado_btn else "OFF")
+            sleep(0.25)  # antirrebote
+        last = now
+
+        # ---- 2) Comandos desde interfaz -> LED D3 ----
+        if poll.poll(0):
+            cmd = sys.stdin.readline().strip()
+
+            if cmd == "LED3_ON":
+                estado_led = 1
+                led.value(1)
+                print("LED3=ON")
+
+            elif cmd == "LED3_OFF":
+                estado_led = 0
+                led.value(0)
+                print("LED3=OFF")
+
+            elif cmd == "LED3_TOGGLE":
+                estado_led ^= 1
+                led.value(estado_led)
+                print("LED3=ON" if estado_led else "LED3=OFF")
+
+        sleep(0.01)
+
+    El código implementa el control y monitoreo de una XIAO ESP32S3 utilizando MicroPython, permitiendo la interacción simultánea con un botón físico y un LED mediante comunicación serial con una computadora.
+
+    En primer lugar, se configuran los pines de entrada y salida digital: un botón físico conectado al pin D4, el cual utiliza una resistencia pull-up interna para la correcta detección de pulsaciones, y un LED conectado al pin D3, cuyo estado es controlado desde una interfaz gráfica en la computadora. Para la gestión de estos elementos se emplean variables de estado que permiten identificar cambios en el botón y en el LED.
+
+    Posteriormente, se implementa un mecanismo de lectura serial no bloqueante, el cual permite verificar de manera continua si existen datos entrantes desde la computadora sin detener la ejecución principal del programa. Este tipo de lectura evita que el microcontrolador quede esperando indefinidamente la llegada de datos por el puerto serial, lo que permite que otras tareas, como la detección del botón físico, sigan ejecutándose de forma simultánea y eficiente.
+
+    Durante el ciclo principal del programa, el estado del botón físico es evaluado constantemente y, al detectarse una pulsación, se envían mensajes ON u OFF a través del puerto serial para su visualización en la interfaz gráfica. Al mismo tiempo, el microcontrolador recibe y procesa comandos enviados desde la computadora, los cuales permiten encender, apagar o alternar el estado del LED conectado al pin D3.
+
+---
+
+## Ejecución del programa en CMD y dependencias necesarias
+
+  - **Ejecución del programa** 
     
-    ![diseño rojo](assets/img/diseño de pcb rojo.jpeg)
+    Para ejecutar la interfaz gráfica desarrollada en Python desde el Símbolo del sistema (CMD), es necesario indicar correctamente la ubicación del archivo .py. Cuando el archivo se encuentra en una carpeta con espacios o dentro de directorios específicos (por ejemplo, en OneDrive), se recomienda utilizar la ruta completa (ruta absoluta) entre comillas para evitar errores de lectura en la terminal. Esto permite que el comando identifique sin ambigüedades el archivo a ejecutar.
 
-  - **Impresión** 
+    Adicionalmente, para que el programa funcione correctamente es indispensable contar con las librerías necesarias instaladas en el entorno de Python. En particular, debido a que la interfaz se comunica con la XIAO ESP32S3 mediante puerto serial, se requiere instalar el módulo pyserial, ya que este permite abrir el puerto COM y leer/escribir datos desde Python. La instalación se realiza desde CMD mediante:
 
-  ![arduino nano conexión](assets/img/pcb impresa.jpeg)
+      pip install pyserial
 
-  A continuación se coloca el codigo que se utilizo para el encendido de los leds. Este fue programado en la aplicación arduino IDE.
+    Una vez instalada la librería, el programa puede ejecutarse y visualizarse correctamente. En caso de no contar con dicha dependencia, el sistema mostrará errores del tipo “No module named serial”, indicando que el módulo requerido no está disponible.
 
-        // Pines
-      const int led0 = D0;
-      const int led1 = D1;
-      const int led2 = D2;
-      const int buttonPin = D3;
+    Finalmente, se debe considerar que el puerto COM solo puede ser utilizado por una aplicación a la vez; por ello, antes de ejecutar la interfaz se recomienda cerrar Thonny u otros monitores seriales para evitar conflictos en la conexión.
 
-      // Variables
-      int pulseCount = 0;
-      bool lastButtonState = HIGH;
-      bool currentButtonState;
+---
 
-      unsigned long lastDebounceTime = 0;
-      const unsigned long debounceDelay = 50;
-
-      void setup() {
-        pinMode(led0, OUTPUT);
-        pinMode(led1, OUTPUT);
-        pinMode(led2, OUTPUT);
-
-        pinMode(buttonPin, INPUT_PULLUP); // botón a GND
-
-        // Apagar todo al inicio
-        digitalWrite(led0, LOW);
-        digitalWrite(led1, LOW);
-        digitalWrite(led2, LOW);
-      }
-
-      void loop() {
-        bool reading = digitalRead(buttonPin);
-
-        // Antirrebote
-        if (reading != lastButtonState) {
-          lastDebounceTime = millis();
-        }
-
-        if ((millis() - lastDebounceTime) > debounceDelay) {
-          if (reading != currentButtonState) {
-            currentButtonState = reading;
-
-            // Detectar flanco de bajada (botón presionado)
-            if (currentButtonState == LOW) {
-              pulseCount++;
-
-              if (pulseCount == 1) {
-                digitalWrite(led0, HIGH);
-              } 
-              else if (pulseCount == 2) {
-                digitalWrite(led1, HIGH);
-              } 
-              else if (pulseCount == 3) {
-                digitalWrite(led2, HIGH);
-              } 
-              else if (pulseCount == 4) {
-                // RESET
-                digitalWrite(led0, LOW);
-                digitalWrite(led1, LOW);
-                digitalWrite(led2, LOW);
-                pulseCount = 0;
-              }
-            }
-          }
-        }
-
-        lastButtonState = reading;
-      }
-
+## Video funcional
 
 - **Video funcionando**  
     <video controls width="640">
-      <source src="{{ '/assets/img/video_pcb.mp4' | relative_url }}" type="video/mp4">
+      <source src="{{ '/assets/img/p3_video.mp4' | relative_url }}" type="video/mp4">
       Tu navegador no soporta video HTML5.
     </video>
 
 ---
-
 ## Siguiente sección
 
 [Primer archivo G-code (.nc)](primer-gcode.md)
