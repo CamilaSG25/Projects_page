@@ -14,53 +14,53 @@ nav_order: 4
 
 - **Código**  
 
-    # Interfaz
-    import tkinter as tk
-    import serial
-    import time
+        # Interfaz
+        import tkinter as tk
+        import serial
+        import time
 
-    PORT = "COM8"   # <-- cambia al COM real de tu XIAO
-    BAUD = 115200
+        PORT = "COM8"   # <-- cambia al COM real de tu XIAO
+        BAUD = 115200
 
-    ser = serial.Serial(PORT, BAUD, timeout=0.1)
-    time.sleep(1)
+        ser = serial.Serial(PORT, BAUD, timeout=0.1)
+        time.sleep(1)
 
-    root = tk.Tk()
-    root.title("XIAO: Botón + LED")
+        root = tk.Tk()
+        root.title("XIAO: Botón + LED")
 
-    canvas = tk.Canvas(root, width=220, height=220)
-    canvas.pack(padx=10, pady=10)
+        canvas = tk.Canvas(root, width=220, height=220)
+        canvas.pack(padx=10, pady=10)
 
-    circulo = canvas.create_oval(40, 40, 180, 180, fill="red")
+        circulo = canvas.create_oval(40, 40, 180, 180, fill="red")
 
-    lbl_led = tk.Label(root, text="LED D3: OFF")
-    lbl_led.pack()
+        lbl_led = tk.Label(root, text="LED D3: OFF")
+        lbl_led.pack()
 
-    def enviar(cmd):
-        ser.write((cmd + "\n").encode())
+        def enviar(cmd):
+            ser.write((cmd + "\n").encode())
 
-    tk.Button(root, text="Toggle LED D3", command=lambda: enviar("LED3_TOGGLE")).pack(pady=10)
+        tk.Button(root, text="Toggle LED D3", command=lambda: enviar("LED3_TOGGLE")).pack(pady=10)
 
-    def leer_serial():
-        if ser.in_waiting:
-            line = ser.readline().decode(errors="ignore").strip()
+        def leer_serial():
+            if ser.in_waiting:
+                line = ser.readline().decode(errors="ignore").strip()
 
-            # Estado del botón físico (D4)
-            if line == "ON":
-                canvas.itemconfig(circulo, fill="green")
-            elif line == "OFF":
-                canvas.itemconfig(circulo, fill="red")
+                # Estado del botón físico (D4)
+                if line == "ON":
+                    canvas.itemconfig(circulo, fill="green")
+                elif line == "OFF":
+                    canvas.itemconfig(circulo, fill="red")
 
-            # Estado del LED D3 (confirmación)
-            elif line == "LED3=ON":
-                lbl_led.config(text="LED D3: ON")
-            elif line == "LED3=OFF":
-                lbl_led.config(text="LED D3: OFF")
+                # Estado del LED D3 (confirmación)
+                elif line == "LED3=ON":
+                    lbl_led.config(text="LED D3: ON")
+                elif line == "LED3=OFF":
+                    lbl_led.config(text="LED D3: OFF")
 
-        root.after(50, leer_serial)
+            root.after(50, leer_serial)
 
-    leer_serial()
-    root.mainloop()
+        leer_serial()
+        root.mainloop()
 
 El código presentado implementa una interfaz gráfica desarrollada en Python utilizando la biblioteca Tkinter, cuya función principal es establecer comunicación serial con una placa XIAO ESP32S3 para el monitoreo y control de entradas y salidas digitales.
 
@@ -78,55 +78,57 @@ La función encargada de la lectura de datos seriales se ejecuta de manera peri�
 
   - **Código** 
 
-    from machine import Pin
-    from time import sleep
-    import sys
-    import uselect
+        # cod de esp32
 
-    ===== Hardware =====
-    btn = Pin(4, Pin.IN, Pin.PULL_UP)   # Botón físico en D4 (a GND)
-    led = Pin(3, Pin.OUT)               # LED en D3 (lo controla la interfaz)
+        from machine import Pin
+        from time import sleep
+        import sys
+        import uselect
 
-    ===== Estados =====
-    estado_btn = 0
-    estado_led = 0
-    last = 1
+        ===== Hardware =====
+        btn = Pin(4, Pin.IN, Pin.PULL_UP)   # Botón físico en D4 (a GND)
+        led = Pin(3, Pin.OUT)               # LED en D3 (lo controla la interfaz)
 
-    Serial no bloqueante (lee comandos de la PC)
-    poll = uselect.poll()
-    poll.register(sys.stdin, uselect.POLLIN)
+        ===== Estados =====
+        estado_btn = 0
+        estado_led = 0
+        last = 1
 
-    print("LISTO")
+        Serial no bloqueante (lee comandos de la PC)
+        poll = uselect.poll()
+        poll.register(sys.stdin, uselect.POLLIN)
 
-    while True:
-        # ---- 1) Botón físico -> ON/OFF (solo imprime) ----
-        now = btn.value()
-        if last == 1 and now == 0:
-            estado_btn ^= 1
-            print("ON" if estado_btn else "OFF")
-            sleep(0.25)  # antirrebote
-        last = now
+        print("LISTO")
 
-        # ---- 2) Comandos desde interfaz -> LED D3 ----
-        if poll.poll(0):
-            cmd = sys.stdin.readline().strip()
+        while True:
+            # ---- 1) Botón físico -> ON/OFF (solo imprime) ----
+            now = btn.value()
+            if last == 1 and now == 0:
+                estado_btn ^= 1
+                print("ON" if estado_btn else "OFF")
+                sleep(0.25)  # antirrebote
+            last = now
 
-            if cmd == "LED3_ON":
-                estado_led = 1
-                led.value(1)
-                print("LED3=ON")
+            # ---- 2) Comandos desde interfaz -> LED D3 ----
+            if poll.poll(0):
+                cmd = sys.stdin.readline().strip()
 
-            elif cmd == "LED3_OFF":
-                estado_led = 0
-                led.value(0)
-                print("LED3=OFF")
+                if cmd == "LED3_ON":
+                    estado_led = 1
+                    led.value(1)
+                    print("LED3=ON")
 
-            elif cmd == "LED3_TOGGLE":
-                estado_led ^= 1
-                led.value(estado_led)
-                print("LED3=ON" if estado_led else "LED3=OFF")
+                elif cmd == "LED3_OFF":
+                    estado_led = 0
+                    led.value(0)
+                    print("LED3=OFF")
 
-        sleep(0.01)
+                elif cmd == "LED3_TOGGLE":
+                    estado_led ^= 1
+                    led.value(estado_led)
+                    print("LED3=ON" if estado_led else "LED3=OFF")
+
+            sleep(0.01)
 
     El código implementa el control y monitoreo de una XIAO ESP32S3 utilizando MicroPython, permitiendo la interacción simultánea con un botón físico y un LED mediante comunicación serial con una computadora.
 
