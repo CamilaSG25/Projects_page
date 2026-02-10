@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Práctica 2
+title: Protocolos de comunicación
 nav_order: 3
 ---
 
-# Práctica 2
+# Protocolos de comunicación 
 
 En la presente práctica se realizó la evaluación de distintos protocolos de comunicación entre plataformas de sistemas embebidos, con el objetivo de analizar su desempeño en términos de velocidad y latencia. Se implementaron pruebas enviando 1000 mensajes entre dispositivos (ATMEGA328p / Arduino UNO y XIAO ESP32-S3) para registrar y analizar el tiempo de respuesta de cada protocolo.
 

@@ -16,7 +16,7 @@ Donde observarás todas las prácticas que generamos en nuestra materia de Siste
 ## Contenidos
 
 1. [Práctica 1](practica1.md)  
-2. [Software (GRBL + OpenBuilds)](software.md)  
+2. [Protocolos de comunicación](practica2.md)  
 3. [Práctica 3](practica3.md)
 4. [Generación de PC](PC.md) 
  
