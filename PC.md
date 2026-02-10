@@ -6,7 +6,7 @@ nav_order: 5
 
 # Generación de PC
 
-Para esta práctica tuvimos como objetivo armar una PC desde cero, para esto tuvimos que hacer un análisis desde cero de los elementos que se requerían e investigar la funcionalidad de cada uno.
+Para esta práctica, el objetivo fue armar una PC desde cero. Para ello, se realizó un análisis previo de los componentes necesarios, así como una investigación sobre la función de cada uno de ellos.
 
 <iframe
   src="{{ '/assets/files/tarea_generar_PC.pdf' | relative_url }}"
