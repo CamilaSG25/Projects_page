@@ -4,25 +4,20 @@ title: Inicio
 nav_order: 1
 ---
 
-# CNC Plotter – Manual de Uso
+# Bienvenido
 
-Este sitio documenta una **CNC de 3 ejes** basada en:
+A continuación, podrás observar un portafolio generado por:
 
-- Arduino UNO + CNC Shield + drivers A4988
-- Firmware **GRBL 1.1**
-- Sender **OpenBuilds CONTROL**
-- Flujo de trabajo desde **PNG / FabModules → G-code → OpenBuilds → CNC**
+Ana Camila Sánchez Guevara y Alexander Eduardo Moncada Rivas
+
+Donde observarás todas las prácticas que generamos en nuestra materia de Sistemas Ciberfísicos durante el periodo de primavera 2025
+
 
 ## Contenidos
 
 1. [Práctica 1](practica1.md)  
 2. [Software (GRBL + OpenBuilds)](software.md)  
 3. [Práctica 3](practica3.md)
-4. [Primer archivo G-code (.nc)](primer-gcode.md) 
-5. [Flujo de trabajo con FabModules](flujo-fabmodules.md) 
+4. [Generación de PC](primer-gcode.md) 
+ 
 
-## Requisitos básicos
-- Acceso a:
-  - Computadora con Windows / macOS / Linux.
-  - Conexión USB al Arduino.
-  - Fuente de alimentación para motores (12–24 V).
