@@ -18,6 +18,6 @@ Donde observarás todas las prácticas que generamos en nuestra materia de Siste
 1. [Práctica 1](practica1.md)  
 2. [Software (GRBL + OpenBuilds)](software.md)  
 3. [Práctica 3](practica3.md)
-4. [Generación de PC](primer-gcode.md) 
+4. [Generación de PC](PC.md) 
  
 
