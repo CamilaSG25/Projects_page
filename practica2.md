@@ -6,65 +6,58 @@ nav_order: 3
 
 # Práctica 2
 
-En la presente práctica se realizó la evaluación de distintos protocolos de comunicación entre plataformas de sistemas embebidos, con el objetivo de analizar su desempeño en términos de velocidad y latencia. Se implementaron pruebas de comunicación enviando 1000 mensajes entre dispositivos en este caso entre ATMEGA328p(Arduino UNO) y el XIAO-ESP32-S3 para posteriormente registrar y analizar el tiempo de respuesta de cada protocolo en cada dispositivo.
+En la presente práctica se realizó la evaluación de distintos protocolos de comunicación entre plataformas de sistemas embebidos, con el objetivo de analizar su desempeño en términos de velocidad y latencia. Se implementaron pruebas enviando 1000 mensajes entre dispositivos (ATMEGA328p / Arduino UNO y XIAO ESP32-S3) para registrar y analizar el tiempo de respuesta de cada protocolo.
 
 Los protocolos evaluados fueron:
 
-- **UART**  
-- **I2C**  
-- **SPI**  
+- **UART**
+- **I2C**
+- **SPI**
 
-Para cada protocolo se documentan las **conexiones físicas**, los **códigos** cargados en cada microcontrolador y los resultados obtenidos mediante **gráficas de latencia**.
+Para cada protocolo se documentan las **conexiones físicas**, los **códigos** y los **resultados** mediante **gráficas de latencia**.
 
 ---
 
 # UART
 
-  - **Conexión**
+## Conexión
 
-  Se realizó la conexión física entre el Arduino UNO y el dispositivo receptor utilizando comunicación UART.  
-  Se compartió una referencia común de tierra (GND) y se conectaron los pines TX y RX correspondientes.
-  Para este caso se ocupó un divisor de voltaje con una resistencia de 1kΩ y 460Ω para eviatr 5v en la XIAO,
-  gracias al divisor se obtuvo un voltaje seguro de ~3.4v
+Se realizó la conexión física entre el Arduino UNO y el XIAO ESP32-S3 utilizando comunicación UART. Se compartió una referencia común de tierra (GND) y se conectaron los pines TX y RX correspondientes.
 
+Para proteger al XIAO (3.3 V), se usó un **divisor de voltaje** con resistencias de **1 kΩ** y **460 Ω** para reducir de 5 V a ~3.4 V.
 
-  ![UART conexión ](assets/img/Conexion_UART1.jpeg)
+![UART conexión](assets/img/Conexion_UART1.jpeg)
+![UART conexión 2](assets/img/Conexion_UART2.jpeg)
 
-  ![UART conexión 2](assets/img/Conexion_UART2.jpeg)
+---
 
-  --- 
+## UART Arduino UNO (medición desde Arduino UNO)
 
-  ## UART Arduino UNO
+### Código (Arduino UNO)
 
-  - **Medir latencia de comunicacion UART desde Arduino UNO**
+<details>
+<summary><strong>Código Arduino UNO (UART desde Arduino UNO)</strong></summary>
 
-  - **Código (Arduino UNO )**
-  
-   <details>
-   <summary><strong>Código Arduino UNO (UART desde Arduino UNO)</strong></summary>
+<pre><code class="language-cpp">
+// =====  UART - Arduino UNO - MASTER  =====
+#define BAUD_RATE 115200
+#define N_MSG     1000
 
-   ```cpp
+String rxLine = "";
 
-   // =====  UART - Arduino UNO - MASTER  =====
+void setup() {
+  Serial.begin(BAUD_RATE);   // D0(RX) / D1(TX)
+  delay(300);
 
-   #define BAUD_RATE 115200
-   #define N_MSG     1000
+  // Header CSV
+  Serial.println("idx,rtt_us,latency_us");
+}
 
-   String rxLine = "";
-
-   void setup() {
-   Serial.begin(BAUD_RATE);   // UART hardware: D0(RX) / D1(TX)
-   delay(300);
-
-   // Header CSV (sale por UART hacia el XIAO)
-   Serial.println("idx,rtt_us,latency_us");
-   }
-
-  void loop() {
+void loop() {
   static bool done = false;
   if (done) return;
 
-  for (int i = 0; i < N_MSG; i++) {
+  for (int i = 0; i &lt; N_MSG; i++) {
     unsigned long t0 = micros();
 
     // Enviar PING
@@ -72,14 +65,13 @@ Para cada protocolo se documentan las **conexiones físicas**, los **códigos** 
     Serial.print(i);
     Serial.print("\n");
 
-    // Esperar ACK A,<id>
+    // Esperar ACK A,&lt;id&gt;
     rxLine = "";
     while (true) {
       if (Serial.available()) {
         char c = Serial.read();
 
         if (c == '\n') {
-          // Línea completa recibida
           if (rxLine.startsWith("A,")) {
             int id = rxLine.substring(2).toInt();
             if (id == i) {
@@ -87,7 +79,7 @@ Para cada protocolo se documentan las **conexiones físicas**, los **códigos** 
               unsigned long rtt = t1 - t0;
               unsigned long lat = rtt / 2;
 
-              // CSV (también sale por UART hacia el XIAO)
+              // CSV
               Serial.print(i);
               Serial.print(",");
               Serial.print(rtt);
@@ -98,71 +90,67 @@ Para cada protocolo se documentan las **conexiones físicas**, los **códigos** 
           }
           rxLine = "";
         } else {
-          if (rxLine.length() < 40) rxLine += c;
+          if (rxLine.length() &lt; 40) rxLine += c;
         }
       }
     }
   }
 
   done = true;
-  }
+}
+</code></pre>
 
-  void setup(){}
+</details>
 
- - **Código (XIAO ESP32-S3 )**
+### Código (XIAO ESP32-S3)
 
-   <details>
-   <summary><strong>Código XIAO (UART desde Arduino UNO)</strong></summary>
+<details>
+<summary><strong>Código XIAO (UART desde Arduino UNO)</strong></summary>
 
-   ```cpp
-  // Tu código aquí
-  void setup() {
-   }
-  // ===== UART - XIAO ESP32-S3 - SLAVE  =====
+<pre><code class="language-cpp">
+// ===== UART - XIAO ESP32-S3 - SLAVE =====
+#define UART_RX_PIN D7
+#define UART_TX_PIN D6
+#define BAUD_RATE   115200
 
-   #define UART_RX_PIN D7
-   #define UART_TX_PIN D6
-   #define BAUD_RATE   115200
+String buf = "";
 
-   String buf = "";
+bool isDigitChar(char c) { return (c &gt;= '0' &amp;&amp; c &lt;= '9'); }
 
-   bool isDigit(char c) { return (c >= '0' && c <= '9'); }
+// valida exactamente: digits,digits,digits (para imprimir solo CSV limpio)
+bool isCsvRow3(const String &amp;s) {
+  if (s.length() &lt; 5) return false; // mínimo "0,0,0"
+  if (!isDigitChar(s[0])) return false;
 
-   // valida exactamente: digits,digits,digits
-   bool isCsvRow3(const String &s) {
-  if (s.length() < 5) return false;      // mínimo "0,0,0"
-  if (!isDigit(s[0])) return false;      // debe iniciar con número
   int commas = 0;
-
-  for (int i = 0; i < (int)s.length(); i++) {
+  for (int i = 0; i &lt; (int)s.length(); i++) {
     char c = s[i];
     if (c == ',') commas++;
-    else if (!isDigit(c)) return false;  // solo dígitos o comas
+    else if (!isDigitChar(c)) return false;
   }
   return commas == 2;
-  }
+}
 
-  void setup() {
-  Serial.begin(115200);  // USB -> aquí copias el CSV limpio
+void setup() {
+  Serial.begin(115200);  // USB
   delay(200);
 
   Serial1.begin(BAUD_RATE, SERIAL_8N1, UART_RX_PIN, UART_TX_PIN);
 
-  // Marca para saber que este sketch está corriendo
   Serial.println("XIAO: listo (CSV limpio)");
-  }
+}
 
-  void loop() {
+void loop() {
   while (Serial1.available()) {
     char c = Serial1.read();
 
     if (c == '\n') {
       // quitar CR si llega \r\n
-      if (buf.length() > 0 && buf[buf.length() - 1] == '\r') {
+      if (buf.length() &gt; 0 &amp;&amp; buf[buf.length() - 1] == '\r') {
         buf.remove(buf.length() - 1);
       }
 
-      // 1) Responder a P,<id>
+      // 1) Responder a P,&lt;id&gt;
       if (buf.startsWith("P,")) {
         int id = buf.substring(2).toInt();
         Serial1.print("A,");
@@ -177,695 +165,589 @@ Para cada protocolo se documentan las **conexiones físicas**, los **códigos** 
 
       buf = "";
     } else {
-      if (buf.length() < 140) buf += c;
-      else buf = ""; // si se desborda, descartamos
+      if (buf.length() &lt; 140) buf += c;
+      else buf = "";
     }
   }
-  }
+}
+</code></pre>
 
-## Resultados
-      A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación UART en Arduino UNO
+</details>
 
-![UART grafica ARDUINO](assets/img/Grafica_UART_Arduino.jpeg)
+### Resultados
 
-      En la gráfica se observa que al inicio la latencia de los mensajes UART es menor, pero cambia hasta llegar a un valor  estable cercano a 1200 µs. Este comportamiento ocurre porque, en los primeros mensajes, el sistema acaba de arrancar y los buffers de comunicación todavía están vacíos, por lo que los mensajes se procesan más rápido.
+A continuación se presenta la gráfica de latencia del protocolo UART midiendo desde Arduino UNO.
 
-      Conforme se envían más mensajes, la comunicación UART entra en un funcionamiento continuo ,entonces, los buffers se llenan, el microcontrolador empieza a esperar respuestas de forma repetitiva y el tiempo de transmisión se vuelve constante. Esto provoca que la latencia aumente ligeramente y luego se mantenga casi igual para el resto de los mensajes.
-     
+![UART gráfica Arduino](assets/img/Grafica_UART_Arduino.jpeg)
 
-   ## UART XIAO ESP32-S3
+En la gráfica se observa que al inicio la latencia es menor y después se estabiliza cerca de ~1200 µs. Esto puede ocurrir porque al principio los buffers están vacíos y el sistema recién arranca; luego, al entrar en un flujo continuo, el tiempo se vuelve más constante.
 
-    **Medir latencia de comunicacion UART desde XIAO ESP32-S3**
-      
-  - **Código (Arduino UNO )**
+---
 
-   <details>
-   <summary><strong>Código Arduino UNO (UART desde XIAO ESP32-S3)</strong></summary>
+## UART XIAO ESP32-S3 (medición desde XIAO)
 
-   ```cpp
-  // Tu código aquí
+### Código (Arduino UNO)
 
-  // ======== UART - Arduino UNO - SLAVE ========
+<details>
+<summary><strong>Código Arduino UNO (UART desde XIAO ESP32-S3)</strong></summary>
 
-  // RX = D0, TX = D1 (Serial hardware)
-  // =======================
+<pre><code class="language-cpp">
+// ======== UART - Arduino UNO - SLAVE (eco) ========
+const uint32_t BAUD = 115200;
 
-  const uint32_t BAUD = 115200;  
-
-  void setup() {
+void setup() {
   Serial.begin(BAUD);
-  }
+}
 
-  void loop() {
+void loop() {
   if (Serial.available()) {
-  int b = Serial.read();
-  if (b >= 0) {
-    Serial.write((uint8_t)b);   // eco inmediato
-      }
-    }
+    int b = Serial.read();
+    if (b &gt;= 0) Serial.write((uint8_t)b);
   }
+}
+</code></pre>
 
-  void setup(){}
+</details>
 
- - **Código (XIAO ESP32-S3 )**
+### Código (XIAO ESP32-S3)
 
-  <details>
-   <summary><strong>Código  XIAO (UART desde XIAO ESP32-S3)</strong></summary>
+<details>
+<summary><strong>Código XIAO (UART desde XIAO ESP32-S3)</strong></summary>
 
-   ```cpp
+<pre><code class="language-cpp">
+// ======== UART - XIAO ESP32-S3 - MASTER ========
+#include &lt;Arduino.h&gt;
 
-  // ======== UART - XIAO ESP32-S3 - MASTER =====
+const uint32_t BAUD = 115200;
+const int TX_PIN = D6;
+const int RX_PIN = D7;
 
-  // TX = D6, RX = D7 (Serial1)
-  // USB Serial -> CSV: idx,rtt_us,latency_us
-  // =======================
+const uint16_t N_SAMPLES = 2000;
+const uint32_t TIMEOUT_US = 30000;
 
-  #include <Arduino.h>
-
-  const uint32_t BAUD = 115200;   // Cambia aquí si subes baud (igual en UNO)
-
-  // Pines UART en XIAO ESP32-S3
-  const int TX_PIN = D6;
-  const int RX_PIN = D7;
-
-  const uint16_t N_SAMPLES = 2000;     // Muestras (puedes dejar 1000 si quieres)
-  const uint32_t TIMEOUT_US = 30000;   // 30 ms (suficiente incluso si hay algún fallo)
-
-  static inline bool read_one_byte(uint8_t &out, uint32_t timeout_us) {
+static inline bool read_one_byte(uint8_t &amp;out, uint32_t timeout_us) {
   uint32_t start = micros();
-  while ((uint32_t)(micros() - start) < timeout_us) {
-  int n = Serial1.available();
-  if (n > 0) {
-    int b = Serial1.read();
-    if (b >= 0) { out = (uint8_t)b; return true; }
-  }
-  // sin delays: lo más rápido posible
+  while ((uint32_t)(micros() - start) &lt; timeout_us) {
+    if (Serial1.available() &gt; 0) {
+      int b = Serial1.read();
+      if (b &gt;= 0) { out = (uint8_t)b; return true; }
+    }
   }
   return false;
-  }
+}
 
-  void setup() {
+void setup() {
   Serial.begin(115200);
   while (!Serial) { delay(10); }
 
   Serial1.begin(BAUD, SERIAL_8N1, RX_PIN, TX_PIN);
-
-  // Header CSV
   Serial.println("idx,rtt_us,latency_us");
-  } 
+}
 
-  void loop() {
-  for (uint32_t i = 0; i < N_SAMPLES; i++) {
+void loop() {
+  for (uint32_t i = 0; i &lt; N_SAMPLES; i++) {
+    while (Serial1.available()) (void)Serial1.read();
 
-  // Limpia basura previa
-  while (Serial1.available()) (void)Serial1.read();
+    uint8_t tx = (uint8_t)(i &amp; 0xFF);
 
-  uint8_t tx = (uint8_t)(i & 0xFF);
+    uint32_t t0 = micros();
+    Serial1.write(tx);
 
-  uint32_t t0 = micros();
-  Serial1.write(tx); // NO flush
+    uint8_t rx = 0;
+    bool ok = read_one_byte(rx, TIMEOUT_US);
+    uint32_t t1 = micros();
 
-  uint8_t rx = 0;
-  bool ok = read_one_byte(rx, TIMEOUT_US);
-  uint32_t t1 = micros();
+    if (!ok || rx != tx) {
+      Serial.print(i);
+      Serial.println(",nan,nan");
+      continue;
+    }
 
-  if (!ok || rx != tx) {
+    uint32_t rtt = t1 - t0;
+    uint32_t latency = rtt / 2;
+
     Serial.print(i);
-    Serial.println(",nan,nan");
-    continue;
-  }
-
-  uint32_t rtt = t1 - t0;
-  uint32_t latency = rtt / 2;
-
-  Serial.print(i);
-  Serial.print(",");
-  Serial.print(rtt);
-  Serial.print(",");
-  Serial.println(latency);
+    Serial.print(",");
+    Serial.print(rtt);
+    Serial.print(",");
+    Serial.println(latency);
   }
 
   while (true) delay(1000);
-  }
-  
-  void setup(){}
+}
+</code></pre>
 
+</details>
 
-## Resultados
-      A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación UART en XIAO ESP32-S3
+### Resultados
 
-  ![UART Grafica XIAO](assets/img/Grafica_UART_XIAO.jpeg)
+![UART gráfica XIAO](assets/img/Grafica_UART_XIAO.jpeg)
 
-    En esta práctica se evaluó el protocolo UART en la XIAO ESP32-S3 mediante comunicación ping-pong. Los resultados muestran una latencia promedio de ~149 µs y una baja variación (1.89 µs), lo que indica una comunicación rápida y estable.
-
-    La mayoría de las mediciones se concentran en un rango estrecho, confirmando la confiabilidad del sistema. En comparación con el Arduino UNO, la XIAO ESP32-S3 presenta un mejor desempeño, por lo que UART en esta plataforma es adecuado para aplicaciones embebidas que requieren baja latencia.
+---
 
 # I2C
 
-    **Conexión**
+## Conexión
 
-    Para el armado se hizo una conexión de pull up a 3.3v para evitar daños en el xiao
-    Con 2 resistencias de 470ohms, asó como se puede observar en las siguientes imágenes, aquí las conexiones van "directas " no cruzadas es decir cada pin va uno a uno (SDA y SCL).
+Para el armado se hizo una conexión **pull-up a 3.3 V** para evitar daños en el XIAO, con **2 resistencias de 470 Ω**. En I2C las líneas van **directas** (SDA con SDA y SCL con SCL).
 
+![I2C conexión](assets/img/Conexion_I2C1.jpeg)
+![I2C conexión 2](assets/img/Conexion_I2C2.jpeg)
 
-   ![I2C conexión ](assets/img/Conexion_I2C1.jpeg)
+---
 
-   ![I2C conexión 2](assets/img/Conexion_I2C2.jpeg)
+## I2C (XIAO mide RTT y Arduino reporta latencia interna)
 
-    ## I2C Arduino UNO
+### Código (Arduino UNO)
 
-    **Medir latencia de comunicacion I2C desde Arduino UNO**
+<details>
+<summary><strong>Código Arduino UNO (I2C esclavo con latencia)</strong></summary>
 
-  - **Código (Arduino UNO )**
+<pre><code class="language-cpp">
+// ======= I2C - Arduino UNO - SLAVE (con latencia) =======
+#include &lt;Wire.h&gt;
 
-   <details>
-   <summary><strong>Código Arduino(I2C desde Arduino UNO)</strong></summary>
+#define SLAVE_ADDR 0x08
 
-   ```cpp
+volatile uint8_t last_token = 0;
+volatile uint32_t t_rx = 0;
 
-    //======= I2C - Arduino UNO - MASTER =========
-
-    #include <Wire.h>
-
-    #define SLAVE_ADDR 0x08
-
-    volatile uint8_t last_token = 0;
-    volatile uint32_t t_rx = 0;
-
-    void onReceive(int n) {
-      while (Wire.available()) {
-        last_token = Wire.read();
-      }
-      t_rx = micros();
-    }
-
-    void onRequest() {
-      uint32_t latency = micros() - t_rx;
-
-      Wire.write(last_token);
-      Wire.write((uint8_t)(latency & 0xFF));
-      Wire.write((uint8_t)((latency >> 8) & 0xFF));
-      Wire.write((uint8_t)((latency >> 16) & 0xFF));
-      Wire.write((uint8_t)((latency >> 24) & 0xFF));
-    }
-
-    void setup() {
-      Wire.begin(SLAVE_ADDR);
-      Wire.onReceive(onReceive);
-      Wire.onRequest(onRequest);
-
-      // Mantener bus a 3.3V: pull-ups internos OFF
-      PORTC &= ~((1 << PC4) | (1 << PC5));  // A4/A5 sin pull-up
-      pinMode(A4, INPUT);
-      pinMode(A5, INPUT);
-      digitalWrite(A4, LOW);
-      digitalWrite(A5, LOW);
-    }
-
-    void loop() {}
-
-    void setup(){}
-
- - **Código ( XIAO ESP32-S3 )**
-
-   <details>
-   <summary><strong>Código  XIAO (I2C desde Arduino UNO)</strong></summary>
-
-   ```cpp
-
-  //========= I2C - XIAO SP32-S3 -SLAVE===========
-
-  #include <Wire.h>
-
-  #define SLAVE_ADDR 0x08
-
-  const int SDA_PIN = 5;  // D4/SDA = GPIO5
-  const int SCL_PIN = 6;  // D5/SCL = GPIO6
-
-  // Cambia entre 100000 y 400000 para comparar velocidad
-  const uint32_t I2C_HZ = 100000;
-
-  // Cuántas mediciones
-  const uint32_t N = 2000;
-
-  // Pausa entre mediciones (0 para máximo estrés)
-  const uint32_t PAUSE_US = 200;
-
-  uint32_t readU32LE() {
-    uint32_t v = 0;
-    v |= (uint32_t)Wire.read();
-    v |= (uint32_t)Wire.read() << 8;
-    v |= (uint32_t)Wire.read() << 16;
-    v |= (uint32_t)Wire.read() << 24;
-    return v;
+void onReceive(int n) {
+  while (Wire.available()) {
+    last_token = Wire.read();
   }
+  t_rx = micros();
+}
 
-  void setup() {
-    Serial.begin(115200);
-    while (!Serial) {}
+void onRequest() {
+  uint32_t latency = micros() - t_rx;
 
-    Wire.begin(SDA_PIN, SCL_PIN);
-    Wire.setClock(I2C_HZ);
+  Wire.write(last_token);
+  Wire.write((uint8_t)(latency &amp; 0xFF));
+  Wire.write((uint8_t)((latency &gt;&gt; 8) &amp; 0xFF));
+  Wire.write((uint8_t)((latency &gt;&gt; 16) &amp; 0xFF));
+  Wire.write((uint8_t)((latency &gt;&gt; 24) &amp; 0xFF));
+}
 
-    Serial.println("idx,rtt_us,echo_ok,arduino_latency_us");
-  }
+void setup() {
+  Wire.begin(SLAVE_ADDR);
+  Wire.onReceive(onReceive);
+  Wire.onRequest(onRequest);
 
-  void loop() {
-    static uint32_t idx = 0;
-    if (idx >= N) while (1) {}
+  // Mantener bus a 3.3V: pull-ups internos OFF
+  PORTC &amp;= ~((1 &lt;&lt; PC4) | (1 &lt;&lt; PC5));
+  pinMode(A4, INPUT);
+  pinMode(A5, INPUT);
+  digitalWrite(A4, LOW);
+  digitalWrite(A5, LOW);
+}
 
-    uint8_t token = (uint8_t)(idx & 0xFF);
+void loop() {}
+</code></pre>
 
-    uint32_t t0 = micros();
+</details>
 
-    // WRITE 1 byte
-    Wire.beginTransmission(SLAVE_ADDR);
-    Wire.write(token);
-    uint8_t err = Wire.endTransmission();
+### Código (XIAO ESP32-S3)
 
-    if (err != 0) {
-      uint32_t rtt = micros() - t0;
-      Serial.printf("%lu,%lu,%d,%d\n", idx, rtt, 0, -1);
-      idx++;
-      delayMicroseconds(PAUSE_US);
-      return;
-    }
+<details>
+<summary><strong>Código XIAO (I2C maestro - mide)</strong></summary>
 
-    // READ 5 bytes
-    uint8_t got = Wire.requestFrom(SLAVE_ADDR, (uint8_t)5);
+<pre><code class="language-cpp">
+// ========= I2C - XIAO ESP32-S3 - MASTER =========
+#include &lt;Wire.h&gt;
 
-    uint8_t echo = 0xFF;
-    uint32_t latency = 0xFFFFFFFF;
+#define SLAVE_ADDR 0x08
 
-    if (got == 5) {
-      echo = Wire.read();
-      latency = readU32LE();
-    }
+const int SDA_PIN = 5;  // D4/SDA = GPIO5
+const int SCL_PIN = 6;  // D5/SCL = GPIO6
 
+const uint32_t I2C_HZ = 100000;
+const uint32_t N = 2000;
+const uint32_t PAUSE_US = 200;
+
+uint32_t readU32LE() {
+  uint32_t v = 0;
+  v |= (uint32_t)Wire.read();
+  v |= (uint32_t)Wire.read() &lt;&lt; 8;
+  v |= (uint32_t)Wire.read() &lt;&lt; 16;
+  v |= (uint32_t)Wire.read() &lt;&lt; 24;
+  return v;
+}
+
+void setup() {
+  Serial.begin(115200);
+  while (!Serial) {}
+
+  Wire.begin(SDA_PIN, SCL_PIN);
+  Wire.setClock(I2C_HZ);
+
+  Serial.println("idx,rtt_us,echo_ok,arduino_latency_us");
+}
+
+void loop() {
+  static uint32_t idx = 0;
+  if (idx &gt;= N) while (1) {}
+
+  uint8_t token = (uint8_t)(idx &amp; 0xFF);
+  uint32_t t0 = micros();
+
+  Wire.beginTransmission(SLAVE_ADDR);
+  Wire.write(token);
+  uint8_t err = Wire.endTransmission();
+
+  if (err != 0) {
     uint32_t rtt = micros() - t0;
-    uint8_t ok = (echo == token) ? 1 : 0;
-
-    Serial.printf("%lu,%lu,%d,%ld\n",
-                  idx, rtt, ok,
-                  (latency == 0xFFFFFFFF) ? -1L : (long)latency);
-
+    Serial.printf("%lu,%lu,%d,%d\n", idx, rtt, 0, -1);
     idx++;
     delayMicroseconds(PAUSE_US);
+    return;
   }
 
-   void setup(){}
+  uint8_t got = Wire.requestFrom(SLAVE_ADDR, (uint8_t)5);
 
- ## Resultados
-      A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación I2C en XIAO ESP32-S3
+  uint8_t echo = 0xFF;
+  uint32_t latency = 0xFFFFFFFF;
 
-  ![I2C grafica arduino](assets/img/Grafica_I2C_Arduino.jpeg)
+  if (got == 5) {
+    echo = Wire.read();
+    latency = readU32LE();
+  }
 
-    En la gráfica se observa que al inicio la latencia de los mensajes UART es menor, pero cambia hasta llegar a un valor  estable cercano a 1200 µs. Este comportamiento ocurre porque, en los primeros mensajes, el sistema acaba de arrancar y los buffers de comunicación todavía están vacíos, por lo que los mensajes se procesan más rápido.
+  uint32_t rtt = micros() - t0;
+  uint8_t ok = (echo == token) ? 1 : 0;
 
-    Conforme se envían más mensajes, la comunicación UART entra en un funcionamiento continuo ,entonces, los buffers se llenan, el microcontrolador empieza a esperar respuestas de forma repetitiva y el tiempo de transmisión se vuelve constante. Esto provoca que la latencia aumente ligeramente y luego se mantenga casi igual para el resto de los mensajes.
-  
-   ## I2C XIAO ESP32-S3
+  Serial.printf("%lu,%lu,%d,%ld\n",
+                idx, rtt, ok,
+                (latency == 0xFFFFFFFF) ? -1L : (long)latency);
 
-   **Medir latencia de comunicacion I2C desde XIAO ESP32-S3**
-      
-  - **Código (Arduino UNO )**
+  idx++;
+  delayMicroseconds(PAUSE_US);
+}
+</code></pre>
 
-    <details>
-    <summary><strong>Código Arduino(I2C desde XIAO ESP32-S3)</strong></summary>
+</details>
 
-   ```cpp
-    // ====== I2C - Arduino UNO - SLAVE======
+### Resultados
 
-    #include <Wire.h>
+![I2C gráfica Arduino](assets/img/Grafica_I2C_Arduino.jpeg)
 
-    #define SLAVE_ADDR 0x08
-    volatile uint8_t lastByte = 0;
+---
 
-    void receiveEvent(int howMany) {
-      if (Wire.available()) {
-        lastByte = Wire.read();
-      }
-    }
+## I2C (medición simple desde XIAO)
 
-    void requestEvent() {
-      Wire.write(lastByte); // responde el mismo dato
-    }
+### Código (Arduino UNO)
 
-    void setup() {
-      Wire.begin(SLAVE_ADDR);
-      Wire.onReceive(receiveEvent);
-      Wire.onRequest(requestEvent);
-    }
+<details>
+<summary><strong>Código Arduino UNO (I2C esclavo simple)</strong></summary>
 
-    void loop() {
-    }
+<pre><code class="language-cpp">
+// ====== I2C - Arduino UNO - SLAVE ======
+#include &lt;Wire.h&gt;
 
-    void setup(){}
+#define SLAVE_ADDR 0x08
+volatile uint8_t lastByte = 0;
 
- - **Código (XIAO ESP32-S3 )**
+void receiveEvent(int howMany) {
+  if (Wire.available()) lastByte = Wire.read();
+}
 
-   <details>
-   <summary><strong>Código XIAO(I2C desde XIAO ESP32-S3)</strong></summary>
+void requestEvent() {
+  Wire.write(lastByte);
+}
 
-   ```cpp
+void setup() {
+  Wire.begin(SLAVE_ADDR);
+  Wire.onReceive(receiveEvent);
+  Wire.onRequest(requestEvent);
+}
 
-    // =========== I2C - XIAO ESP3 - MASTER ==============
+void loop() {}
+</code></pre>
 
-    #include <Wire.h>
+</details>
 
-    #define SLAVE_ADDR 0x08
-    #define MAX_MSGS 1000
+### Código (XIAO ESP32-S3)
 
-    uint32_t idx = 0;
+<details>
+<summary><strong>Código XIAO (I2C maestro simple)</strong></summary>
 
-    void setup() {
-      Serial.begin(115200);
-      Wire.begin();              // XIAO como master
-      Wire.setClock(400000);     // 400 kHz
+<pre><code class="language-cpp">
+// =========== I2C - XIAO ESP32-S3 - MASTER ===========
+#include &lt;Wire.h&gt;
 
-      Serial.println("idx,rtt_us");
-    }
+#define SLAVE_ADDR 0x08
+#define MAX_MSGS 1000
 
-    void loop() {
+uint32_t idx = 0;
 
-      if (idx >= MAX_MSGS) {
-        // Detener experimento
-        while (1) {
-          delay(1000);
-        }
-      }
+void setup() {
+  Serial.begin(115200);
+  Wire.begin();
+  Wire.setClock(400000);
+  Serial.println("idx,rtt_us");
+}
 
-      uint32_t t0, t1;
+void loop() {
+  if (idx &gt;= MAX_MSGS) while (1) delay(1000);
 
-      t0 = micros();
+  uint32_t t0 = micros();
 
-      // Enviar dato
-      Wire.beginTransmission(SLAVE_ADDR);
-      Wire.write((uint8_t)(idx & 0xFF));
-      Wire.endTransmission();
+  Wire.beginTransmission(SLAVE_ADDR);
+  Wire.write((uint8_t)(idx &amp; 0xFF));
+  Wire.endTransmission();
 
-      // Pedir respuesta
-      Wire.requestFrom(SLAVE_ADDR, 1);
-      if (Wire.available()) {
-        Wire.read();
-      }
+  Wire.requestFrom(SLAVE_ADDR, 1);
+  if (Wire.available()) Wire.read();
 
-      t1 = micros();
+  uint32_t rtt = micros() - t0;
 
-      uint32_t rtt = t1 - t0;
+  Serial.print(idx);
+  Serial.print(",");
+  Serial.println(rtt);
 
-      Serial.print(idx);
-      Serial.print(",");
-      Serial.println(rtt);
+  idx++;
+  delay(5);
+}
+</code></pre>
 
-      idx++;
+</details>
 
-      delay(5); // puedes quitarlo si quieres saturar el bus
-    }
+### Resultados
 
-   void setup(){}
+![I2C gráfica XIAO](assets/img/Grafica_I2C_XIAO.jpeg)
 
- ## Resultados
-  A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación I2C en XIAO ESP32-S3
-
-  ![I2C grafica XIAO](assets/img/Grafica_I2C_XIAO.jpeg)
-
-  En esta práctica se evaluó el protocolo UART en la XIAO ESP32-S3 mediante comunicación ping-pong. Los resultados muestran una latencia promedio de ~222 µs y una baja variación (0.55 µs), lo que indica una comunicación rápida y estable.
-
-  La mayoría de las mediciones se concentran en un rango estrecho, confirmando la confiabilidad del sistema. En comparación con el Arduino UNO, la XIAO ESP32-S3 presenta un mejor desempeño, por lo que UART en esta plataforma es adecuado para aplicaciones embebidas que requieren baja latencia.
-
+---
 
 # SPI
-   **Conexión**
 
-    Para el armado se hicieron conexiones deirectas, cada pin se conecto al otro del microcontrolador contrario.
-    De esta manera no se perdieron datos y se obtuvieron buenos resultados, aunque alguna configuración para bahar el voltaje hubiera sido una buena gorma de evitar daños.
+## Conexión
 
-   ![I2C conexión ](assets/img/Conexion_SPI1.jpeg)
+Para el armado se hicieron conexiones directas (pin a pin). Idealmente se recomienda considerar adaptación de nivel de voltaje (UNO 5V vs XIAO 3.3V) para evitar riesgos.
 
-   ![I2C conexión 2](assets/img/Conexion_SPI2.jpeg)
+![SPI conexión](assets/img/Conexion_SPI1.jpeg)
+![SPI conexión 2](assets/img/Conexion_SPI2.jpeg)
 
-    ## I2C Arduino UNO
+---
 
-    **Medir latencia de comunicacion SPI desde Arduino UNO**
+## SPI Arduino UNO (Arduino maestro)
 
-  - **Código (Arduino UNO )**
+### Código (Arduino UNO)
 
-   <details>
-   <summary><strong>Código Arduino(SPI desde Arduino)</strong></summary>
+<details>
+<summary><strong>Código Arduino UNO (SPI desde Arduino)</strong></summary>
 
-   ```cpp
+<pre><code class="language-cpp">
+// ========== SPI - ARDUINO UNO - MAESTRO ==========
+#include &lt;SPI.h&gt;
 
-    // ========== SPI - ARDUINO UNO - MAESTRO ==========
+const uint8_t SS_PIN = 10;
+const uint8_t CMD    = 0xA5;
 
-    #include <SPI.h>
+const uint16_t MAX_SAMPLES = 1000;
+uint16_t idx = 0;
 
-    const uint8_t SS_PIN = 10;
-    const uint8_t CMD    = 0xA5;
+void setup() {
+  Serial.begin(115200);
 
-    const uint16_t MAX_SAMPLES = 1000;
-    uint16_t idx = 0;
+  pinMode(SS_PIN, OUTPUT);
+  digitalWrite(SS_PIN, HIGH);
 
-    void setup() {
-      Serial.begin(115200);
+  SPI.begin();
+  SPI.setDataMode(SPI_MODE0);
+  SPI.setBitOrder(MSBFIRST);
 
-      pinMode(SS_PIN, OUTPUT);
-      digitalWrite(SS_PIN, HIGH);
+  SPI.setClockDivider(SPI_CLOCK_DIV64); // ~250 kHz
 
-      SPI.begin();
-      SPI.setDataMode(SPI_MODE0);
-      SPI.setBitOrder(MSBFIRST);
+  Serial.println("idx,spi_time_us,rx0,rx1");
+}
 
-      // Velocidad segura (UNO 5V → XIAO 3.3V)
-      SPI.setClockDivider(SPI_CLOCK_DIV64); // ~250 kHz
+void loop() {
+  if (idx &gt;= MAX_SAMPLES) while (true) {}
 
-      Serial.println("idx,spi_time_us,rx0,rx1");
-    }
+  uint32_t t0 = micros();
 
-    void loop() {
-      // 🔒 Límite de 1000 muestras
-      if (idx >= MAX_SAMPLES) {
-        // Detenemos el loop para que no mande más datos
-        while (true) {
-          // aquí se queda para siempre
-        }
-      }
+  digitalWrite(SS_PIN, LOW);
+  uint8_t rx0 = SPI.transfer(CMD);
+  uint8_t rx1 = SPI.transfer(0x00);
+  digitalWrite(SS_PIN, HIGH);
 
-      uint32_t t0 = micros();
+  uint32_t t1 = micros();
 
-      digitalWrite(SS_PIN, LOW);
-      uint8_t rx0 = SPI.transfer(CMD);
-      uint8_t rx1 = SPI.transfer(0x00);
-      digitalWrite(SS_PIN, HIGH);
+  Serial.print(idx);
+  Serial.print(",");
+  Serial.print(t1 - t0);
+  Serial.print(",");
+  Serial.print(rx0);
+  Serial.print(",");
+  Serial.println(rx1);
 
-      uint32_t t1 = micros();
+  idx++;
+  delay(5);
+}
+</code></pre>
 
-      Serial.print(idx);
-      Serial.print(",");
-      Serial.print(t1 - t0);
-      Serial.print(",");
-      Serial.print(rx0);
-      Serial.print(",");
-      Serial.println(rx1);
+</details>
 
-      idx++;
+### Código (XIAO ESP32-S3)
 
-      delay(5); // pequeño delay para estabilidad (puedes bajarlo o quitarlo)
-    }
+<details>
+<summary><strong>Código XIAO (SPI desde Arduino)</strong></summary>
 
-    void setup(){}
+<pre><code class="language-cpp">
+// =========== SPI - XIAO ESP32-S3 - SLAVE ===========
+#include &lt;Arduino.h&gt;
+extern "C" {
+  #include "driver/spi_slave.h"
+  #include "driver/gpio.h"
+}
 
+static const int PIN_SS   = 7;
+static const int PIN_SCK  = 8;
+static const int PIN_MOSI = 10;
+static const int PIN_MISO = 9;
 
- - **Código (XIAO ESP32-S3 )**
+static const uint8_t CMD = 0xA5;
 
-   <details>
-   <summary><strong>Código XIAO(SPI desde Arduino)</strong></summary>
+static uint8_t tx_buf[2];
+static uint8_t rx_buf[2];
+static uint8_t counter = 0;
 
-   ```cpp
+void setup() {
+  spi_bus_config_t buscfg = {};
+  buscfg.mosi_io_num = PIN_MOSI;
+  buscfg.miso_io_num = PIN_MISO;
+  buscfg.sclk_io_num = PIN_SCK;
+  buscfg.quadwp_io_num = -1;
+  buscfg.quadhd_io_num = -1;
 
-    // =========== SPI - XIAO ESP32-S3 - SLAVE ===========0
+  spi_slave_interface_config_t slvcfg = {};
+  slvcfg.spics_io_num = PIN_SS;
+  slvcfg.flags = 0;
+  slvcfg.queue_size = 1;
+  slvcfg.mode = 0;
 
-    #include <Arduino.h>
+  esp_err_t ret = spi_slave_initialize(SPI2_HOST, &amp;buscfg, &amp;slvcfg, SPI_DMA_CH_AUTO);
+  if (ret != ESP_OK) while (true) delay(1000);
 
-    extern "C" {
-      #include "driver/spi_slave.h"
-      #include "driver/gpio.h"
-    }
+  tx_buf[0] = 0; tx_buf[1] = 0;
+  rx_buf[0] = 0; rx_buf[1] = 0;
+}
 
-    static const int PIN_SS   = 7;   // XIAO D7  (CS/SS)
-    static const int PIN_SCK  = 8;   // XIAO D8
-    static const int PIN_MOSI = 10;  // XIAO D10
-    static const int PIN_MISO = 9;   // XIAO D9
+void loop() {
+  tx_buf[0] = counter;
+  tx_buf[1] = 0;
 
-    static const uint8_t CMD = 0xA5;
+  spi_slave_transaction_t t = {};
+  t.length = 2 * 8;
+  t.tx_buffer = tx_buf;
+  t.rx_buffer = rx_buf;
 
-    static uint8_t tx_buf[2];
-    static uint8_t rx_buf[2];
+  esp_err_t ret = spi_slave_transmit(SPI2_HOST, &amp;t, portMAX_DELAY);
+  if (ret == ESP_OK) {
+    if (rx_buf[0] == CMD) counter++;
+  }
+}
+</code></pre>
 
-    static uint8_t counter = 0;
+</details>
 
-    void setup() {
-      // Configuración del bus SPI para esclavo
-      spi_bus_config_t buscfg = {};
-      buscfg.mosi_io_num = PIN_MOSI;
-      buscfg.miso_io_num = PIN_MISO;
-      buscfg.sclk_io_num = PIN_SCK;
-      buscfg.quadwp_io_num = -1;
-      buscfg.quadhd_io_num = -1;
+### Resultados
 
-      spi_slave_interface_config_t slvcfg = {};
-      slvcfg.spics_io_num = PIN_SS;
-      slvcfg.flags = 0;
-      slvcfg.queue_size = 1;
-      slvcfg.mode = 0; // SPI_MODE0
+![SPI gráfica Arduino](assets/img/Grafica_SPI_Arduino.jpeg)
 
-      // Inicializa SPI esclavo (usa SPI2_HOST en ESP32/ESP32-S3)
-      esp_err_t ret = spi_slave_initialize(SPI2_HOST, &buscfg, &slvcfg, SPI_DMA_CH_AUTO);
+---
 
-      // Si falla, nos quedamos aquí para que lo notes
-      if (ret != ESP_OK) {
-        while (true) { delay(1000); }
-      }
+## SPI XIAO ESP32-S3 (XIAO maestro)
 
-      tx_buf[0] = 0;
-      tx_buf[1] = 0;
-      rx_buf[0] = 0;
-      rx_buf[1] = 0;
-    }
+### Código (Arduino UNO)
 
-    void loop() {
-      // Prepara respuesta: contador
-      tx_buf[0] = counter;
-      tx_buf[1] = 0;
+<details>
+<summary><strong>Código Arduino UNO (SPI esclavo)</strong></summary>
 
-      spi_slave_transaction_t t = {};
-      t.length = 2 * 8;            // 2 bytes en bits
-      t.tx_buffer = tx_buf;
-      t.rx_buffer = rx_buf;
+<pre><code class="language-cpp">
+// ========== SPI - ARDUINO UNO - SLAVE ==========
+#include &lt;SPI.h&gt;
 
-      // Espera a que el maestro haga una transacción (bloqueante)
-      esp_err_t ret = spi_slave_transmit(SPI2_HOST, &t, portMAX_DELAY);
-      if (ret == ESP_OK) {
-        if (rx_buf[0] == CMD) {
-          counter++;
-        }
-      }
-    }
+volatile uint8_t replyByte = 0;
+volatile uint8_t lastReceived = 0;
 
-    void setup (){}
+ISR(SPI_STC_vect) {
+  lastReceived = SPDR;
+  SPDR = replyByte;
+  if (lastReceived == 0xA5) replyByte++;
+}
 
- ## Resultados
-      A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación SPI en Arduino UNO
+void setup() {
+  pinMode(MISO, OUTPUT);
+  pinMode(SS, INPUT_PULLUP);
+  SPCR |= _BV(SPE);
+  SPCR |= _BV(SPIE);
+  SPDR = replyByte;
+}
 
-  ![I2C grafica arduino](assets/img/Grafica_SPI_Arduino.jpeg)
+void loop() {}
+</code></pre>
 
-    A partir de la gráfica de latencia de mensajes SPI en Arduino, se observa que el protocolo SPI presenta un comportamiento altamente estable y consistente durante la transmisión de 1000 mensajes entre los dispositivos.
+</details>
 
-    La latencia promedio medida fue de aproximadamente 77 µs, con una desviación estándar de 1.71 µs, lo cual indica una muy baja variabilidad entre las muestras. La mayoría de los valores de latencia se concentran dentro del rango delimitado por ±1 desviación estándar (75 µs a 78 µs), evidenciando que el sistema mantiene tiempos de respuesta prácticamente constantes a lo largo de toda la prueba.
- 
-   ## I2C XIAO ESP32-S3
+### Código (XIAO ESP32-S3)
 
-   **Medir latencia de comunicacion I2C desde XIAO ESP32-S3**
-      
-   - **Código (Arduino UNO )**
+<details>
+<summary><strong>Código XIAO (SPI maestro)</strong></summary>
 
-   <details>
-   <summary><strong>Código Arduino(SPI desde XIAO ESP32-S3)</strong></summary>
+<pre><code class="language-cpp">
+// ========= SPI - XIAO ESP32-S3 - MASTER =========
+#include &lt;SPI.h&gt;
 
-   ```cpp
+static const int PIN_SS   = 7;
+static const int PIN_SCK  = 8;
+static const int PIN_MISO = 9;
+static const int PIN_MOSI = 10;
 
-    // ========== SPI - ARDUINO UNO - SLAVE ==========
+static const uint8_t CMD = 0xA5;
+static const uint16_t MAX_SAMPLES = 1000;
 
-      #include <SPI.h>
+void setup() {
+  Serial.begin(115200);
+  while (!Serial) {}
 
-    volatile uint8_t replyByte = 0;
-    volatile uint8_t lastReceived = 0;
+  pinMode(PIN_SS, OUTPUT);
+  digitalWrite(PIN_SS, HIGH);
 
-    ISR(SPI_STC_vect) {
-      lastReceived = SPDR;
-      SPDR = replyByte;
-      if (lastReceived == 0xA5) replyByte++;
-    }
+  SPI.begin(PIN_SCK, PIN_MISO, PIN_MOSI, PIN_SS);
+  Serial.println("idx,rtt_us,rx");
+}
 
-    void setup() {
-      pinMode(MISO, OUTPUT);
-      pinMode(SS, INPUT_PULLUP);
-      SPCR |= _BV(SPE);
-      SPCR |= _BV(SPIE);
-      SPDR = replyByte;
-    }
+void loop() {
+  static uint16_t idx = 0;
+  if (idx &gt;= MAX_SAMPLES) while (true) {}
 
-    void loop() {}
+  SPI.beginTransaction(SPISettings(1000000, MSBFIRST, SPI_MODE0));
 
-    void setup(){}
+  uint32_t t0 = micros();
 
- - **Código (XIAO ESP32-S3 )**
+  digitalWrite(PIN_SS, LOW);
+  SPI.transfer(CMD);
+  SPI.transfer(0x00);
+  uint8_t rx = SPI.transfer(0x00);
+  digitalWrite(PIN_SS, HIGH);
 
-   <details>
-   <summary><strong>Código XIAO(SPI desde XIAO ESP32-S3)</strong></summary>
+  uint32_t t1 = micros();
+  SPI.endTransaction();
 
-   ```cpp
+  Serial.print(idx++);
+  Serial.print(",");
+  Serial.print(t1 - t0);
+  Serial.print(",");
+  Serial.println(rx);
+}
+</code></pre>
 
-    // ========= SPI - XIAO ESP32-S3 - MASTER ========
+</details>
 
-    #include <SPI.h>
+### Resultados
 
-    static const int PIN_SS   = 7;
-    static const int PIN_SCK  = 8;
-    static const int PIN_MISO = 9;
-    static const int PIN_MOSI = 10;
-
-    static const uint8_t CMD = 0xA5;
-    static const uint16_t MAX_SAMPLES = 1000;
-
-    void setup() {
-      Serial.begin(115200);
-      while (!Serial) {}
-
-      pinMode(PIN_SS, OUTPUT);
-      digitalWrite(PIN_SS, HIGH);
-
-      SPI.begin(PIN_SCK, PIN_MISO, PIN_MOSI, PIN_SS);
-
-      Serial.println("idx,rtt_us,rx");
-    }
-
-    void loop() {
-      static uint16_t idx = 0;
-      if (idx >= MAX_SAMPLES) while (true) {}
-
-      SPI.beginTransaction(SPISettings(1000000, MSBFIRST, SPI_MODE0));
-
-      uint32_t t0 = micros();
-
-      digitalWrite(PIN_SS, LOW);
-
-      SPI.transfer(CMD);        // el UNO recibe CMD y prepara respuesta
-      SPI.transfer(0x00);       // ciclo extra para que se cargue bien SPDR
-      uint8_t rx = SPI.transfer(0x00); // aquí lees respuesta estable
-
-      digitalWrite(PIN_SS, HIGH);
-
-      uint32_t t1 = micros();
-
-      SPI.endTransaction();
-
-      Serial.print(idx++);
-      Serial.print(",");
-      Serial.print(t1 - t0);
-      Serial.print(",");
-      Serial.println(rx);
-    }
-
-    void setup(){}
-
- ## Resultados
-  A continuación se presentará la gráfica de resultado sobre el tiempo de respuesta y latencia del protocolo de comunicación SPI en XIAO ESP32-S3
-
-  ![I2C grafica XIAO](assets/img/Grafica_SPI_XIAO.jpeg)
-
-  Los resultados obtenidos al medir la latencia de mensajes SPI con el XIAO como maestro muestran un comportamiento estable y de baja latencia durante la transmisión de 1000 mensajes. La latencia promedio fue de aproximadamente 33 µs,con una desviación estándar de 1.09 µs, lo que indica una variación mínima entre las muestras.
-  En comparación con las mediciones realizadas con el Arduino UNO como maestro, el XIAO presenta una menor latencia, lo cual se explica por su mayor capacidad de procesamiento y manejo más eficiente del protocolo SPI. En conclusión, SPI demuestra ser un protocolo rápido y confiable, especialmente cuando se utiliza una plataforma de mayor rendimiento como el XIAO.
+![SPI gráfica XIAO](assets/img/Grafica_SPI_XIAO.jpeg)
 
 ---
 
