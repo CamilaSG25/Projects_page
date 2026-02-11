@@ -337,3 +337,19 @@ video {
   height: 100%;
   border: 0;
 }
+
+/* ===== AJUSTE DE ANCHO DEL SIDEBAR (Just the Docs) ===== */
+@media (min-width: 66rem) {
+  .side-bar {
+    width: 16rem !important;      /* prueba 14rem–18rem */
+  }
+  .main {
+    margin-left: 16rem !important; /* debe coincidir con el width */
+  }
+}
+@media (min-width: 66rem) {
+  .main-content-wrap {
+    max-width: 70rem; /* opcional: hace el contenido más ancho */
+  }
+}
+
