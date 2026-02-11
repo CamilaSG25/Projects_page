@@ -261,8 +261,8 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
   <div style="margin: 1.5rem 0;">
 
     <a 
-      href="{{ '/assets/files/cod5.ino' | relative_url }}" 
-      download="cod5.ino"
+      href="{{ '/assets/files/cod5.py' | relative_url }}" 
+      download="cod5.py"
       style="
         display:inline-block;
         padding:12px 18px;
@@ -314,8 +314,8 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
   <div style="margin: 1.5rem 0;">
 
     <a 
-      href="{{ '/assets/files/cod6.ino' | relative_url }}" 
-      download="cod6.ino"
+      href="{{ '/assets/files/cod6.py' | relative_url }}" 
+      download="cod6.py"
       style="
         display:inline-block;
         padding:12px 18px;
