@@ -339,17 +339,23 @@ video {
 }
 
 /* ===== AJUSTE DE ANCHO DEL SIDEBAR (Just the Docs) ===== */
+
+
 @media (min-width: 66rem) {
+
   .side-bar {
-    width: 16rem !important;      /* prueba 14rem–18rem */
+    width: 18rem !important;
+    padding-left: 1.25rem;
+    padding-right: 1rem;
   }
+
   .main {
-    margin-left: 16rem !important; /* debe coincidir con el width */
+    margin-left: 18rem !important;
   }
-}
-@media (min-width: 66rem) {
+
   .main-content-wrap {
     max-width: 70rem; /* opcional: hace el contenido más ancho */
   }
 }
+
 
