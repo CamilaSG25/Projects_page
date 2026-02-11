@@ -30,8 +30,31 @@ nav_order: 2
 - **Código** 
 Dentro de la función setup(), se configuró el pin del LED como salida mediante la instrucción pinMode. En la función loop(), se implementó la lógica de encendido y apagado del LED utilizando las instrucciones digitalWrite, acompañadas de retardos temporales de 500 milisegundos mediante la función delay()
 
+<div style="margin: 1.5rem 0;">
 
-  ![Arduino uno programa](assets/img/Programa_arduino.jpeg)
+    <a 
+      href="{{ '/assets/files/cod1.ino' | relative_url }}" 
+      download="interfaz.py"
+      style="
+        display:inline-block;
+        padding:12px 18px;
+        background: linear-gradient(135deg, #484D8A, #5E63A8);
+        color:white;
+        border-radius:12px;
+        text-decoration:none;
+        font-weight:600;
+        font-size:0.95rem;
+        box-shadow: 0 6px 14px rgba(72,77,138,0.25);
+        transition: all 0.2s ease;
+      "
+      onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 18px rgba(72,77,138,0.35)';"
+      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 14px rgba(72,77,138,0.25)';"
+    >
+      ⬇ Descargar archivo codigo_arduino_uno.ino
+    </a>
+
+  </div>
+  
 
 - **Video funcionando**  
     <video controls width="640">
