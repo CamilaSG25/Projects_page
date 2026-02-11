@@ -63,7 +63,7 @@ Adicionalmente, se incluye una etiqueta de texto que muestra el estado del LED c
     <div style="margin: 1.5rem 0;">
         <a 
             href="{{ '/assets/files/codigoesp32.py' | relative_url }}" 
-            download="interfaz.py"
+            download="codigoesp32.py"
             style="
             display:inline-block;
             padding:12px 18px;

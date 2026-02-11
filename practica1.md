@@ -34,7 +34,7 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
     <a 
       href="{{ '/assets/files/cod1.ino' | relative_url }}" 
-      download="interfaz.py"
+      download="cod1.ino"
       style="
         display:inline-block;
         padding:12px 18px;
@@ -90,7 +90,30 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
     En la función setup(), se configuró el pin del LED como salida digital mediante la instrucción pinMode. Posteriormente, en la función loop(), se implementó una secuencia cíclica en la cual el LED se enciende y apaga utilizando la instrucción digitalWrite, incorporando retardos de tiempo mediante la función delay() para controlar la velocidad del parpadeo.
 
-  ![arduino nano código](assets/img/cod nano.png)
+  <div style="margin: 1.5rem 0;">
+
+    <a 
+      href="{{ '/assets/files/cod2.ino' | relative_url }}" 
+      download="cod2.ino"
+      style="
+        display:inline-block;
+        padding:12px 18px;
+        background: linear-gradient(135deg, #484D8A, #5E63A8);
+        color:white;
+        border-radius:12px;
+        text-decoration:none;
+        font-weight:600;
+        font-size:0.95rem;
+        box-shadow: 0 6px 14px rgba(72,77,138,0.25);
+        transition: all 0.2s ease;
+      "
+      onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 18px rgba(72,77,138,0.35)';"
+      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 14px rgba(72,77,138,0.25)';"
+    >
+      ⬇ Descargar archivo codigo_arduino_nano.ino
+    </a>
+
+  </div>
 
 - **Video funcionando**  
     <video controls width="640">
@@ -122,7 +145,30 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
   En la función setup(), el pin del LED se configuró como salida digital mediante la instrucción pinMode. Posteriormente, en la función loop(), se implementó una secuencia cíclica en la que el LED se enciende y apaga de manera alternada utilizando la instrucción digitalWrite, incorporando retardos de 500 milisegundos con la función delay() para controlar la frecuencia del parpadeo
 
-  ![wroom cod](assets/img/wroom_cod.jpeg)
+  <div style="margin: 1.5rem 0;">
+
+    <a 
+      href="{{ '/assets/files/cod3.ino' | relative_url }}" 
+      download="cod3.ino"
+      style="
+        display:inline-block;
+        padding:12px 18px;
+        background: linear-gradient(135deg, #484D8A, #5E63A8);
+        color:white;
+        border-radius:12px;
+        text-decoration:none;
+        font-weight:600;
+        font-size:0.95rem;
+        box-shadow: 0 6px 14px rgba(72,77,138,0.25);
+        transition: all 0.2s ease;
+      "
+      onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 18px rgba(72,77,138,0.35)';"
+      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 14px rgba(72,77,138,0.25)';"
+    >
+      ⬇ Descargar archivo codigo_wroom.ino
+    </a>
+
+  </div>
 
   - **Video funcionando**  
 
@@ -154,7 +200,30 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
     Debido a las características de la placa, el LED opera en configuración activo-bajo, por lo que un valor lógico bajo (0) enciende el LED, mientras que un valor lógico alto (1) lo apaga. La estructura while True permite que el parpadeo del LED se ejecute de manera continua, incorporando retardos de 0.5 segundos para controlar la frecuencia de encendido y apagado.
 
-    ![sense cod](assets/img/cod sense.jpeg)
+    <div style="margin: 1.5rem 0;">
+
+      <a 
+        href="{{ '/assets/files/cod4.py' | relative_url }}" 
+        download="cod4.py"
+        style="
+          display:inline-block;
+          padding:12px 18px;
+          background: linear-gradient(135deg, #484D8A, #5E63A8);
+          color:white;
+          border-radius:12px;
+          text-decoration:none;
+          font-weight:600;
+          font-size:0.95rem;
+          box-shadow: 0 6px 14px rgba(72,77,138,0.25);
+          transition: all 0.2s ease;
+        "
+        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 18px rgba(72,77,138,0.35)';"
+        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 14px rgba(72,77,138,0.25)';"
+      >
+        ⬇ Descargar archivo codigo_ESP32S3.py
+      </a>
+
+  </div>
 
 
 - **Video funcionando**  
@@ -189,6 +258,31 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
   La estructura while True permite que el parpadeo del LED se ejecute de manera continua, incorporando retardos de 0.5 segundos para controlar la frecuencia de encendido y apagado.
 
+  <div style="margin: 1.5rem 0;">
+
+    <a 
+      href="{{ '/assets/files/cod5.ino' | relative_url }}" 
+      download="cod5.ino"
+      style="
+        display:inline-block;
+        padding:12px 18px;
+        background: linear-gradient(135deg, #484D8A, #5E63A8);
+        color:white;
+        border-radius:12px;
+        text-decoration:none;
+        font-weight:600;
+        font-size:0.95rem;
+        box-shadow: 0 6px 14px rgba(72,77,138,0.25);
+        transition: all 0.2s ease;
+      "
+      onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 18px rgba(72,77,138,0.35)';"
+      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 14px rgba(72,77,138,0.25)';"
+    >
+      ⬇ Descargar archivo codigo_RP2040.py
+    </a>
+
+  </div>
+
 - **Video funcionando**  
 
   <video controls width="640">
@@ -217,72 +311,32 @@ Dentro de la función setup(), se configuró el pin del LED como salida mediante
 
   A continuación se coloca el codigo que se utilizo para el encendido de los leds. Este fue programado en la aplicación arduino IDE.
 
-        // Pines
-      const int led0 = D0;
-      const int led1 = D1;
-      const int led2 = D2;
-      const int buttonPin = D3;
+  <div style="margin: 1.5rem 0;">
 
-      // Variables
-      int pulseCount = 0;
-      bool lastButtonState = HIGH;
-      bool currentButtonState;
+    <a 
+      href="{{ '/assets/files/cod6.ino' | relative_url }}" 
+      download="cod6.ino"
+      style="
+        display:inline-block;
+        padding:12px 18px;
+        background: linear-gradient(135deg, #484D8A, #5E63A8);
+        color:white;
+        border-radius:12px;
+        text-decoration:none;
+        font-weight:600;
+        font-size:0.95rem;
+        box-shadow: 0 6px 14px rgba(72,77,138,0.25);
+        transition: all 0.2s ease;
+      "
+      onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 18px rgba(72,77,138,0.35)';"
+      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 14px rgba(72,77,138,0.25)';"
+    >
+      ⬇ Descargar archivo codigo_para_leds_xiao_esp32.py
+    </a>
 
-      unsigned long lastDebounceTime = 0;
-      const unsigned long debounceDelay = 50;
+  </div>
 
-      void setup() {
-        pinMode(led0, OUTPUT);
-        pinMode(led1, OUTPUT);
-        pinMode(led2, OUTPUT);
-
-        pinMode(buttonPin, INPUT_PULLUP); // botón a GND
-
-        // Apagar todo al inicio
-        digitalWrite(led0, LOW);
-        digitalWrite(led1, LOW);
-        digitalWrite(led2, LOW);
-      }
-
-      void loop() {
-        bool reading = digitalRead(buttonPin);
-
-        // Antirrebote
-        if (reading != lastButtonState) {
-          lastDebounceTime = millis();
-        }
-
-        if ((millis() - lastDebounceTime) > debounceDelay) {
-          if (reading != currentButtonState) {
-            currentButtonState = reading;
-
-            // Detectar flanco de bajada (botón presionado)
-            if (currentButtonState == LOW) {
-              pulseCount++;
-
-              if (pulseCount == 1) {
-                digitalWrite(led0, HIGH);
-              } 
-              else if (pulseCount == 2) {
-                digitalWrite(led1, HIGH);
-              } 
-              else if (pulseCount == 3) {
-                digitalWrite(led2, HIGH);
-              } 
-              else if (pulseCount == 4) {
-                // RESET
-                digitalWrite(led0, LOW);
-                digitalWrite(led1, LOW);
-                digitalWrite(led2, LOW);
-                pulseCount = 0;
-              }
-            }
-          }
-        }
-
-        lastButtonState = reading;
-      }
-
+    
 
 - **Video funcionando**  
     <video controls width="640">
