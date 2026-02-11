@@ -14,53 +14,31 @@ nav_order: 4
 
 - **Código**  
 
-        # Interfaz
-        import tkinter as tk
-        import serial
-        import time
+<div style="margin: 1.5rem 0;">
 
-        PORT = "COM8"   # <-- cambia al COM real de tu XIAO
-        BAUD = 115200
+  <a 
+    href="{{ '/assets/files/interfaz.py' | relative_url }}" 
+    download="interfaz.py"
+    style="
+      display:inline-block;
+      padding:12px 18px;
+      background: linear-gradient(135deg, #484D8A, #5E63A8);
+      color:white;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:0.95rem;
+      box-shadow: 0 6px 14px rgba(72,77,138,0.25);
+      transition: all 0.2s ease;
+    "
+    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 18px rgba(72,77,138,0.35)';"
+    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 14px rgba(72,77,138,0.25)';"
+  >
+    ⬇ Descargar archivo interfaz.py
+  </a>
 
-        ser = serial.Serial(PORT, BAUD, timeout=0.1)
-        time.sleep(1)
+</div>
 
-        root = tk.Tk()
-        root.title("XIAO: Botón + LED")
-
-        canvas = tk.Canvas(root, width=220, height=220)
-        canvas.pack(padx=10, pady=10)
-
-        circulo = canvas.create_oval(40, 40, 180, 180, fill="red")
-
-        lbl_led = tk.Label(root, text="LED D3: OFF")
-        lbl_led.pack()
-
-        def enviar(cmd):
-            ser.write((cmd + "\n").encode())
-
-        tk.Button(root, text="Toggle LED D3", command=lambda: enviar("LED3_TOGGLE")).pack(pady=10)
-
-        def leer_serial():
-            if ser.in_waiting:
-                line = ser.readline().decode(errors="ignore").strip()
-
-                # Estado del botón físico (D4)
-                if line == "ON":
-                    canvas.itemconfig(circulo, fill="green")
-                elif line == "OFF":
-                    canvas.itemconfig(circulo, fill="red")
-
-                # Estado del LED D3 (confirmación)
-                elif line == "LED3=ON":
-                    lbl_led.config(text="LED D3: ON")
-                elif line == "LED3=OFF":
-                    lbl_led.config(text="LED D3: OFF")
-
-            root.after(50, leer_serial)
-
-        leer_serial()
-        root.mainloop()
 
 El código presentado implementa una interfaz gráfica desarrollada en Python utilizando la biblioteca Tkinter, cuya función principal es establecer comunicación serial con una placa XIAO ESP32S3 para el monitoreo y control de entradas y salidas digitales.
 
