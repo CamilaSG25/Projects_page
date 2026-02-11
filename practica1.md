@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Práctica 1
+title: Blink con microcontroladores
 nav_order: 2
 ---
 
-# Práctica 1
+# Blink con microcontroladores
 
   En la presente práctica se realizó la implementación del programa básico Blink en distintas placas de desarrollo con el objetivo de verificar su correcto funcionamiento, así como comprobar la comunicación entre el entorno de desarrollo y el microcontrolador. El programa Blink consiste en el encendido y apagado periódico de un LED, lo cual permite validar de manera sencilla las salidas digitales, la carga del código y la correcta configuración de la placa utilizada.
 

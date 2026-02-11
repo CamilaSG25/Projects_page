@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Práctica 3
+title: Tkinter comunicado con ESP32
 nav_order: 4
 ---
 
-# Práctica 3
+# Tkinter comunicado con ESP32
 
   En la presente práctica se realizó la comunicación serial entre una computadora personal y una placa XIAO ESP32S3 utilizando MicroPython y una interfaz gráfica desarrollada en Python con Tkinter. El objetivo principal fue establecer un sistema de interacción bidireccional que permitiera tanto la lectura de un botón físico conectado a la placa como el control de un actuador (LED) desde una interfaz gráfica en la computadora.
 
