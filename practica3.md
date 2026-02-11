@@ -50,7 +50,8 @@ Una vez inicializada la comunicación, se crea la ventana principal de la interf
 
 Adicionalmente, se incluye una etiqueta de texto que muestra el estado del LED conectado al pin D3, permitiendo al usuario conocer si este se encuentra encendido o apagado. Para el control del LED, se implementa un botón en la interfaz gráfica que, al ser presionado, envía un comando serial a la placa para alternar el estado del LED.
 
-![Interfaz Tkinter](assets/img/interfazdiseño.jpg)
+
+<img src="assets/img/interfazdiseño.jpg" width="400">
 
 ---
 
