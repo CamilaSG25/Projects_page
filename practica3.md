@@ -53,7 +53,7 @@ Adicionalmente, se incluye una etiqueta de texto que muestra el estado del LED c
 
 <img src="assets/img/interfaz1.jpg" width="400">
 
-hola
+hola1
 
 ![Interfaz Tkinter](assets/img/interfaz1.jpg)
 
