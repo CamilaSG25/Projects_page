@@ -21,6 +21,9 @@ just_the_docs:
     - "assets/css/custom.css"
   footer_content: ""
 
+# Botón para copiar código
+enable_copy_code_button: true
+
 search_enabled: true
 search:
   # Cambia el numero dependiendo el numero de subniveles de páginas, poner 1 por default
