@@ -284,6 +284,7 @@ void loop() {
 ![UART gráfica XIAO](assets/img/Grafica_UART_XIAO.jpeg)
 
     En esta gráfica de UART en el XIAO, la latencia se mantiene prácticamente constante alrededor de ~298 µs, con una dispersión muy baja (Std Dev ≈ 3.74 µs). A diferencia del caso anterior en Arduino (donde la latencia se estabilizaba cerca de ~1200 µs y con más variación), aquí el comportamiento es mucho más “limpio” y repetible, lo cual es consistente con un micro más rápido y con mejor manejo de la comunicación serial, reduciendo tiempos de espera y efectos de buffer.
+
 ---
 
 # I2C
@@ -433,6 +434,7 @@ void loop() {
 ![I2C gráfica Arduino](assets/img/Grafica_I2C_Arduino.jpeg)
 
     En la gráfica de I2C en Arduino se observa un pico aislado al inicio y después la latencia se mantiene muy estable alrededor de ~395 µs. Ese pico inicial suele estar relacionado con el arranque y la primera transacción (sincronización/inicialización del bus), pero una vez que el flujo de mensajes es continuo, el tiempo se vuelve consistente, con poca variación (Std Dev ≈ 6.78 µs), lo que indica una comunicación I2C bastante repetible en estas condiciones.
+
 ---
 
 ## I2C (medición simple desde XIAO)
@@ -519,7 +521,8 @@ void loop() {
 ![I2C gráfica XIAO](assets/img/Grafica_I2C_XIAO.jpeg)
 
     En la gráfica de I2C en el XIAO la latencia se concentra alrededor de ~222 µs (ya ignorando el primer dato), y la variación es mínima (Std Dev ≈ 0.55 µs). Aunque aparecen picos esporádicos, la mayoría de los mensajes se mantienen en un rango muy estrecho, lo que indica una comunicación muy consistente; en comparación con I2C en Arduino (~395 µs), el XIAO logra menor latencia, probablemente por su mayor capacidad de procesamiento y un manejo más eficiente del intercambio en el bus.
-    ---
+
+---
 
 # SPI
 
@@ -659,6 +662,7 @@ void loop() {
 ![SPI gráfica Arduino](assets/img/Grafica_SPI_Arduino.jpeg)
 
     En la gráfica de SPI en Arduino la latencia promedio se mantiene alrededor de ~77 µs, con una variación baja (Std Dev ≈ 1.71 µs). Se notan algunos picos aislados, pero en general los valores se quedan dentro de un rango muy estrecho, lo que sugiere que SPI ofrece una comunicación rápida y bastante estable; esto es consistente con que SPI es un bus síncrono y normalmente tiene menos sobrecarga que UART o I2C.
+
 ---
 
 ## SPI XIAO ESP32-S3 (XIAO maestro)
@@ -754,6 +758,7 @@ void loop() {
 ![SPI gráfica XIAO](assets/img/Grafica_SPI_XIAO.jpeg)
 
     En la gráfica de SPI en el XIAO la latencia se mantiene muy estable alrededor de ~33 µs, con una dispersión aún menor (Std Dev ≈ 1.09 µs). Solo se observa un pico fuerte al inicio (típico del arranque/primera transacción), pero después el comportamiento es prácticamente plano. En comparación con SPI en Arduino (~77 µs), el XIAO reduce la latencia casi a la mitad, lo cual es consistente con su mayor velocidad de procesamiento y un manejo más eficiente del intercambio por SPI.
+    
 ---
 
 ### Obtención De Gráficas
