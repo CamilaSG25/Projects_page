@@ -8,7 +8,7 @@ nav_order: 10
 
 ## Objetivo
 
-Crear y visualizar una página web local básica en **Visual Studio Code** utilizando la extensión **Live Server**, configurando un puerto local y comprobando su funcionamiento desde el navegador.
+Crear y visualizar una página web local básica en Visual Studio Code utilizando la extensión Live Server, configurando un puerto local y comprobando su funcionamiento desde el navegador.
 
 ---
 
@@ -17,7 +17,7 @@ Crear y visualizar una página web local básica en **Visual Studio Code** utili
 - **Visual Studio Code**
 - Extensión **Live Server**
 - Archivo **index.html**
-- Archivo de configuración **settings.json** (dentro de `.vscode`)
+- Archivo de configuración **settings.json** (dentro de *vscode*)
 
 ---
 
@@ -27,7 +27,7 @@ Crear y visualizar una página web local básica en **Visual Studio Code** utili
 
 Primero se descargó e instaló la extensión **Live Server** en Visual Studio Code desde la sección de extensiones.
 
-![Instalación de Live Server](/workspaces/Projects_page/assets/img/Live_server.png)
+![Instalación de Live Server](assets/img/Live_server.png)
 
 ---
 
@@ -36,13 +36,13 @@ Primero se descargó e instaló la extensión **Live Server** en Visual Studio C
 Se creó una carpeta de trabajo llamada **WEB_CALEX-MAIN**, en la cual se observan los archivos principales del proyecto:
 - `index.html`
 - `README.md`
-- carpeta `.vscode` con `settings.json`
+- carpeta en vscode con `settings.json`
 
-![Carpeta del proyecto](/workspaces/Projects_page/assets/img/Carpeta.png)
+![Carpeta del proyecto](assets/img/Carpeta.png)
 
-### 3. Creación del archivo `index.html`
+### 3. Creación del archivo index.html
 
-Después se creó el archivo **`index.html`**, donde se escribió la estructura básica de una página HTML con:
+Después se creó el archivo **index.html**, donde se escribió la estructura básica de una página HTML con:
 
 #### Código usado en `index.html`
 
@@ -63,15 +63,15 @@ Después se creó el archivo **`index.html`**, donde se escribió la estructura 
  
 ```
 
-### 4. Configuración de Live Server en `settings.json`
+### 4. Configuración de Live Server en settings.json
 
-Posteriormente, dentro de la carpeta **`.vscode`**, se configuró el archivo **`settings.json`** para definir el puerto y el host que utilizaría Live Server al ejecutar la página web local.
+Posteriormente, dentro de la carpeta **vscode**, se configuró el archivo **settings.json** para definir el puerto y el host que utilizaría Live Server al ejecutar la página web local.
 
 En este caso:
-- se asignó el **puerto `5500`**
-- y el **host `localhost`**
+- se asignó el **puerto 5500**
+- y el **host localhost**
 
-#### Código usado en `settings.json`
+#### Código usado en settings.json
 
 ```json
 {
@@ -84,11 +84,11 @@ En este caso:
 
 Una vez creados y configurados los archivos del proyecto, se procedió a abrir la página web local desde Visual Studio Code.
 
-Para ello, se dio clic derecho sobre el archivo **`index.html`** y se seleccionó la opción **`Open with Live Server`**.  
+Para ello, se dio clic derecho sobre el archivo **index.html** y se seleccionó la opción **Open with Live Server**.  
 Esta acción ejecuta automáticamente un servidor local y abre la página en el navegador predeterminado.
 
 #### Captura sugerida: opción **Open with Live Server** en VS Code
-![Open with Live Server](/workspaces/Projects_page/assets/img/Codigo_OpenLiveServer.png)
+![Open with Live Server](assets/img/Codigo_OpenLiveServer.png)
 
 ---
 
@@ -102,11 +102,11 @@ La página puede visualizarse usando una dirección como:
 En algunos casos, también puede abrirse mediante la **IP local del equipo** (por ejemplo, dentro de la misma red), usando el mismo puerto configurado por Live Server.
 
 #### Captura sugerida: página web abierta en el navegador con Live Server
-![Página web local abierta](/workspaces/Projects_page/assets/img/Captura_PagWeb.png)
+![Página web local abierta](assets/img/Captura_PagWeb.png)
 
 ---
 
 ### 7. Resultado final
 
-Con este procedimiento se logró abrir y visualizar correctamente una **página web local** utilizando **Live Server** en Visual Studio Code, comprobando el funcionamiento del archivo `index.html` desde el navegador.
+Con este procedimiento se logró abrir y visualizar correctamente una **página web local** utilizando **Live Server** en Visual Studio Code, comprobando el funcionamiento del archivo index.html desde el navegador.
 
