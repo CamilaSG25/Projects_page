@@ -122,4 +122,4 @@ Adicionalmente, se incluye una etiqueta de texto que muestra el estado del LED c
 ---
 ## Siguiente sección
 
-[Primer archivo G-code (.nc)](primer-gcode.md)
+[Página Web Local](practica4.md)
