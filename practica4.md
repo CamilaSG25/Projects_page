@@ -110,3 +110,7 @@ En algunos casos, también puede abrirse mediante la **IP local del equipo** (po
 
 Con este procedimiento se logró abrir y visualizar correctamente una **página web local** utilizando **Live Server** en Visual Studio Code, comprobando el funcionamiento del archivo index.html desde el navegador.
 
+---
+## Siguiente sección
+
+[API local con Flask - Guardar y leer datos](practica5.md)

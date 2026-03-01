@@ -19,5 +19,7 @@ Donde observarás todas las prácticas que generamos en nuestra materia de Siste
 2. [Protocolos de comunicación](practica2.md)  
 3. [Tkinter comunicado con ESP32](practica3.md)
 4. [Generación de PC](PC.md) 
+5. [Página web local con Live Server](practica4.md)
+6. [API Local servicio Web-Flask](practica5.md) 
  
 
