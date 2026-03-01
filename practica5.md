@@ -119,12 +119,12 @@ Liga utilizada:
 
 Esta ruta devuelve la información guardada previamente, permitiendo verificar que el servidor Flask está funcionando correctamente.
 
----
 
  **Nota:** La IP puede cambiar dependiendo de la red en la que se conecte el equipo.  
  Si cambia, solo se reemplaza la IP y se conserva el puerto `5000`.
 
- ## Resultado
+---
+## Resultado
 
 Se logró ejecutar correctamente una API local con Flask y probar sus rutas desde el navegador.  
 Fue posible **guardar** un dato con la ruta `/guardar` y **consultarlo** después con la ruta `/leer`.
