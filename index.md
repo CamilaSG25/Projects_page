@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Inicio
+title: Inicio 
 nav_order: 1
 ---
 

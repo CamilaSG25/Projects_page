@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Generación de PC
+title: ·Generación de PC
 nav_order: 5
 ---
 

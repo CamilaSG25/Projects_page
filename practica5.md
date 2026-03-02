@@ -1,6 +1,6 @@
 ---
 layout: default
-title: API local con Flask - Guardar y leer datos
+title: ·API local con Flask - Guardar y leer datos
 nav_order: 11
 ---
 
@@ -138,5 +138,4 @@ También ayudó a identificar la IP del equipo y usarla para acceder al servicio
 
 ---
 ## Siguiente sección
-
-[Proximamente web completa esp32-leds](practica5.md)
+[Aplicación Web ESP-32](practica6_.md)

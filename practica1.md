@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Blink con microcontroladores
+title: ·Blink con microcontroladores
 nav_order: 2
 ---
 
