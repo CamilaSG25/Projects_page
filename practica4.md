@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ·Página web local con Live Server
+title: Página web local con Live Server
 nav_order: 10
 ---
 

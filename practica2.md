@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ·Protocolos de comunicación
+title: Protocolos de comunicación
 nav_order: 3
 ---
 

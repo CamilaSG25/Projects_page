@@ -1,9 +1,0 @@
----
-layout: default
-title: ·Aplicación web ESP-32
-nav_order: 11
----
-
-[Aplicación Web ESP-32 **(Local)**](pract6_local.md)
-[Aplicación Web ESP-32 **(Servidor)**](pract_servidor.md)
-[Aplicación Web ESP-32 **(Render/GitHub)**](pract6_render_github.md)p

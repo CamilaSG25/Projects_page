@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ·Tkinter comunicado con ESP32
+title: Tkinter comunicado con ESP32
 nav_order: 4
 ---
 
