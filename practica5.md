@@ -143,14 +143,94 @@ Esta estructura permite separar claramente backend y frontend, facilitando el de
 <img src="{{ '/assets/img/Practica5/1.1.jpeg' | relative_url }}">
 
 <!-- Ejemplo para botón de descarga -->
-<!--
+
 <a 
-  href="{{ '/assets/files/archivo1.py' | relative_url }}" 
-  download="archivo1.py"
+  href="{{ '/assets/files/practica5/p5_p1_codsVS.zip' | relative_url }}" 
+  download="p5_p1_codsVS.zip"
   class="boton-descarga">
-  ⬇ Descargar archivo1.py
+  ⬇ Descargar códigos VS
 </a>
--->
+
+<h4>1.2 Configuración del servidor Flask</h4>
+
+<p>
+Posteriormente se programó el servidor Flask, el cual es responsable de manejar la comunicación entre la interfaz web y el sistema que controla los LEDs.
+</p>
+
+<p>
+El servidor cuenta con varias rutas principales:
+</p>
+
+<p>
+/ → carga la página principal de la interfaz web.
+/api/state → permite consultar el estado actual del sistema.
+/api/set → permite modificar el color y la cantidad de LEDs encendidos.
+/static → permite servir los archivos estáticos de la interfaz.
+</p>
+
+<p>
+El servidor también utiliza un archivo llamado state.json para almacenar la información actual del sistema, como el color seleccionado y la cantidad de LEDs activos.
+</p>
+
+<p>
+Además, el servidor se ejecuta en el puerto 5000, permitiendo que otros dispositivos dentro de la misma red puedan acceder a él.
+</p>
+
+<!-- Ejemplo para imagen -->
+<img src="{{ '/assets/img/Practica5/1.2.jpeg' | relative_url }}">
+
+<h4>1.3 Comunicación con el servidor</h4>
+<p>
+Una vez ejecutado el servidor, este comienza a recibir peticiones desde el navegador. En la terminal de Visual Studio Code se pueden observar las solicitudes que realiza la página web al servidor.
+</p>
+
+<p>
+Estas solicitudes utilizan el método GET para consultar el estado actual del sistema a través de la ruta:
+</p>
+
+<p>
+/api/state
+</p>
+
+<p>
+Cada vez que la página se actualiza o consulta el estado, el servidor responde enviando la información almacenada en el archivo state.json.
+</p>
+
+<p>
+Esto permite mantener sincronizada la interfaz web con el estado real del sistema.
+</p>
+
+<img src="{{ '/assets/img/Practica5/1.3.jpeg' | relative_url }}">
+
+<h4>1.4 Configuración de red para comunicación con ESP32</h4>
+<p>
+Para que el microcontrolador ESP32 pudiera comunicarse con el servidor Flask, se configuró la dirección IP de la computadora donde se estaba ejecutando el servidor.
+</p>
+
+<p>
+Esta dirección IP permite que el ESP32 acceda al servidor a través de la red WiFi y pueda consultar el estado del sistema mediante la ruta:
+</p>
+
+<p>
+http://IP_DEL_SERVIDOR:5000/api/state
+</p>
+
+<p>
+En el código del microcontrolador se especifica esta dirección junto con la configuración de la red WiFi a la cual se conecta el dispositivo.
+</p>
+
+<p>
+De esta forma, el ESP32 puede obtener la información enviada desde la interfaz web y actualizar el estado de los LEDs.
+</p>
+
+<img src="{{ '/assets/img/Practica5/1.4.jpeg' | relative_url }}">
+
+<a 
+  href="{{ '/assets/files/practica5/cod_colores1.ino' | relative_url }}" 
+  download="cod_colores1.ino"
+  class="boton-descarga">
+  ⬇ Descargar cod_colores1.ino
+</a>
 
   </div>
 </details>
