@@ -94,6 +94,13 @@ Finalmente, el backend se desplegó en la nube mediante Render, mientras que la 
   box-shadow: 0 8px 18px rgba(72,77,138,0.35);
   text-decoration: none;
 }
+
+.acordeon-contenido img{
+  display:block;
+  margin:15px auto;
+  max-width:100%;
+  border-radius:8px;
+}
 </style>
 
 <div class="acordeon-seccion">
@@ -133,7 +140,7 @@ Esta estructura permite separar claramente backend y frontend, facilitando el de
 </p>
 
 <!-- Ejemplo para imagen -->
-![Estructura del VS](assets/img/Practica5/1.1.jpeg)
+<img src="{{ '/assets/img/Practica5/1.1.jpeg' | relative_url }}">
 
 <!-- Ejemplo para botón de descarga -->
 <!--
