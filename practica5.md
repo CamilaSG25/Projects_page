@@ -239,7 +239,10 @@ Recuerda que para inicializar el código para que aparezca la IP y la pagina emp
 
 <h4>Video de la parte 1</h4>
 
-<img src="{{ '/assets/img/Practica5/video1.mp4' | relative_url }}">
+<video width="600" controls>
+  <source src="{{ '/assets/img/Practica5/video1.mp4' | relative_url }}" type="video/mp4">
+  Tu navegador no soporta video.
+</video>
 
   </div>
 </details>
