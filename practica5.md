@@ -21,9 +21,9 @@ Finalmente, el backend se desplegó en la nube mediante Render, mientras que la 
 
 .acordeon-seccion details {
   margin-bottom: 12px;
-  border: 2px solid #9e9e9e;
+  border: 2px solid #4a4f8c;
   border-radius: 10px;
-  background: #efefef;
+  background: #4a4f8c;
   overflow: hidden;
 }
 
@@ -31,9 +31,9 @@ Finalmente, el backend se desplegó en la nube mediante Render, mientras que la 
   list-style: none;
   cursor: pointer;
   padding: 14px 18px;
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-weight: 500;
-  color: #222;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
