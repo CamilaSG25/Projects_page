@@ -237,6 +237,10 @@ Recuerda que para inicializar el código para que aparezca la IP y la pagina emp
 
 <img src="{{ '/assets/img/Practica5/1.4.jpeg' | relative_url }}">
 
+<h4>Video de la parte 1</h4>
+
+<img src="{{ '/assets/img/Practica5/video1.mp4' | relative_url }}">
+
   </div>
 </details>
 
