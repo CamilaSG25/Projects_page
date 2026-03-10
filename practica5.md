@@ -373,22 +373,113 @@ Así, aunque la interfaz ya no corría localmente en la misma computadora, el fl
   <summary>Parte 3</summary>
   <div class="acordeon-contenido">
 
-### Título de la parte 3
+<h3>3. Despliegue del backend en Render y comunicación con GitHub</h3>
 
-Escribe aquí la descripción o explicación de la tercera parte.
+<h4>3.1 Creación del repositorio del backend</h4>
 
-<!-- Ejemplo para imagen -->
-<!-- ![Nombre de imagen](assets/img/tu_imagen3.png) -->
+<p>
+En la tercera parte del proyecto se decidió mover el backend del servidor Flask a la nube utilizando la plataforma Render. Para ello primero se creó un nuevo repositorio en GitHub que contendría los archivos necesarios del backend.
+</p>
 
-<!-- Ejemplo para botón de descarga -->
-<!--
+<p>
+Este repositorio incluyó principalmente el archivo <code>app.py</code>, donde se encuentra la lógica del servidor Flask, así como el archivo <code>requirements.txt</code> que permite a Render instalar automáticamente las librerías necesarias para ejecutar la aplicación.
+</p>
+
+<p>
+Una vez creado el repositorio, este se utilizó como base para desplegar el servicio web dentro de Render.
+</p>
+
+<img src="{{ '/assets/img/Practica5/parte3/3.1.jpeg' | relative_url }}">
+
 <a 
-  href="{{ '/assets/files/archivo3.py' | relative_url }}" 
-  download="archivo3.py"
+  href="{{ '/assets/files/practica5/parte3/LEDS_ESP32_BACK_RENDER-main.zip' | relative_url }}" 
+  download="LEDS_ESP32_BACK_RENDER-main.zip"
   class="boton-descarga">
-  ⬇ Descargar archivo3.py
+  ⬇ Descargar backend para Render
 </a>
--->
+
+<h4>3.2 Conexión de Render con el repositorio de GitHub</h4>
+
+<p>
+Posteriormente se configuró un nuevo servicio web en Render conectándolo directamente con el repositorio de GitHub creado previamente. De esta forma, cada vez que se realiza un cambio en el repositorio, Render puede actualizar automáticamente el servidor.
+</p>
+
+<p>
+Render detectó que el proyecto utiliza Python y procedió a instalar las dependencias indicadas en el archivo <code>requirements.txt</code>. Después de este proceso, el servicio quedó desplegado y disponible a través de una dirección pública en internet.
+</p>
+
+<img src="{{ '/assets/img/Practica5/parte3/3.2.jpeg' | relative_url }}">
+
+<h4>3.3 Verificación del servidor en Render</h4>
+
+<p>
+Una vez desplegado el servidor, se verificó su funcionamiento accediendo a la dirección pública generada por Render. En esta página se podía observar un mensaje indicando que el servidor Flask estaba funcionando correctamente y que las rutas disponibles eran <code>/api/state</code> y <code>/api/set</code>.
+</p>
+
+<p>
+Además, al acceder a la ruta <code>/api/state</code>, el servidor devolvía un objeto en formato JSON con el estado actual del sistema.
+</p>
+
+<ul>
+  <li><code>color</code> → color actual configurado para los LEDs.</li>
+  <li><code>count</code> → cantidad de LEDs encendidos.</li>
+  <li><code>updated</code> → fecha y hora de la última actualización.</li>
+</ul>
+
+<img src="{{ '/assets/img/Practica5/parte3/3.3.jpeg' | relative_url }}">
+
+<img src="{{ '/assets/img/Practica5/parte3/3.4.jpeg' | relative_url }}">
+
+<h4>3.4 Integración del frontend con el backend en Render</h4>
+
+<p>
+Para completar la integración del sistema, se utilizó el mismo frontend desarrollado en la parte anterior y publicado en GitHub Pages. Sin embargo, se realizó una pequeña modificación en el archivo <code>app.js</code>, cambiando la dirección del servidor para que las peticiones se enviaran ahora al backend alojado en Render.
+</p>
+
+<p>
+De esta forma, cuando el usuario selecciona un color o la cantidad de LEDs desde la interfaz web, la información se envía al servidor en Render, el cual guarda el estado y lo mantiene disponible para que el ESP32 pueda consultarlo.
+</p>
+
+<p>
+El enlace del frontend quedó disponible en:
+</p>
+
+<p>
+https://camilasg25.github.io/LEDS_ESP32_PARTE2/
+</p>
+
+<img src="{{ '/assets/img/Practica5/parte3/3.5.jpeg' | relative_url }}">
+
+<a 
+  href="{{ '/assets/files/practica5/parte3/LEDS_ESP32_PARTE2-main.zip' | relative_url }}" 
+  download="LEDS_ESP32_PARTE2-main.zip"
+  class="boton-descarga">
+  ⬇ Descargar frontend utilizado
+</a>
+
+<h4>3.5 Código final del ESP32</h4>
+
+<p>
+Finalmente se actualizó el código del ESP32 para que en lugar de consultar el servidor local, realizara las peticiones directamente al servidor desplegado en Render.
+</p>
+
+<p>
+De esta manera, el microcontrolador podía obtener el estado actual del sistema desde internet, permitiendo que los LEDs respondieran a los cambios realizados desde la interfaz web publicada en GitHub Pages.
+</p>
+
+<a 
+  href="{{ '/assets/files/practica5/parte3/COD_COLORES_PARTE3.ino' | relative_url }}" 
+  download="COD_COLORES_PARTE3.ino"
+  class="boton-descarga">
+  ⬇ Descargar código final ESP32
+</a>
+
+<h4>Video de la parte 3</h4>
+
+<video width="600" controls>
+  <source src="{{ '/assets/img/Practica5/parte3/video3.mp4' | relative_url }}" type="video/mp4">
+  Tu navegador no soporta video.
+</video>
 
   </div>
 </details>
