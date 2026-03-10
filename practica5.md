@@ -102,9 +102,7 @@ Finalmente, el backend se desplegó en la nube mediante Render, mientras que la 
   <summary>Parte 1</summary>
   <div class="acordeon-contenido">
 
-### Título de la parte 1
-
-# Desarrollo del servidor Flask y página web
+### Desarrollo del servidor Flask y página web
 
 1.1 Estructura del proyecto
 
