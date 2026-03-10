@@ -104,7 +104,13 @@ Finalmente, el backend se desplegó en la nube mediante Render, mientras que la 
 
 ### Título de la parte 1
 
-Escribe aquí la descripción o explicación de la primera parte.
+# Desarrollo del servidor Flask y página web
+
+1.1 Estructura del proyecto
+
+Primero se creó la estructura del proyecto dentro de Visual Studio Code, donde se organizaron los archivos necesarios para el funcionamiento del servidor Flask y la interfaz web.
+
+El proyecto contiene una carpeta llamada static, donde se guardan los archivos de la interfaz (HTML, CSS y JavaScript). También se incluyen los archivos del servidor Flask y el archivo donde se almacenará el estado de los LEDs.
 
 <!-- Ejemplo para imagen -->
 <!-- ![Nombre de imagen](assets/img/tu_imagen.png) -->
