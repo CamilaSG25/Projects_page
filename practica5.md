@@ -251,22 +251,120 @@ Recuerda que para inicializar el código para que aparezca la IP y la pagina emp
   <summary>Parte 2</summary>
   <div class="acordeon-contenido">
 
-### Título de la parte 2
+<h3>2. Separación del backend local y frontend en GitHub Pages</h3>
 
-Escribe aquí la descripción o explicación de la segunda parte.
+<h4>2.1 Cambio de arquitectura del sistema</h4>
 
-<!-- Ejemplo para imagen -->
-<!-- ![Nombre de imagen](assets/img/tu_imagen2.png) -->
+<p>
+En esta segunda parte ya no se utilizó otra computadora para correr la parte visual del proyecto. En su lugar, se decidió mantener el backend de Flask ejecutándose de forma local en la computadora, mientras que el frontend se publicó en GitHub Pages.
+</p>
 
-<!-- Ejemplo para botón de descarga -->
-<!--
+<p>
+Con esta modificación, la interfaz web pudo abrirse desde un repositorio publicado en GitHub, mientras que la lógica de guardado y consulta del estado continuó realizándose desde el servidor Flask local.
+</p>
+
+<p>
+Esto permitió separar el sistema en dos partes:
+</p>
+
+<ul>
+  <li><b>Backend local</b> → servidor Flask encargado de guardar y entregar el estado del sistema.</li>
+  <li><b>Frontend en GitHub Pages</b> → interfaz web para seleccionar color y cantidad de LEDs.</li>
+</ul>
+
+<p>
+Esta estrategia evitó ocupar otra computadora únicamente para mostrar el frontend y facilitó el acceso a la interfaz desde otros dispositivos conectados a la misma red.
+</p>
+
 <a 
-  href="{{ '/assets/files/archivo2.py' | relative_url }}" 
-  download="archivo2.py"
+  href="{{ '/assets/img/Practica5/parte2/LEDS_ESP32_PARTE2-main.zip' | relative_url }}" 
+  download="LEDS_ESP32_PARTE2-main.zip"
   class="boton-descarga">
-  ⬇ Descargar archivo2.py
+  ⬇ Descargar front de GitHub
 </a>
--->
+
+<h4>2.2 Ajuste del servidor Flask para permitir acceso externo</h4>
+
+<p>
+Para que el frontend publicado en GitHub pudiera comunicarse correctamente con el servidor local, fue necesario modificar el archivo <code>app.py</code>.
+</p>
+
+<p>
+En esta versión se agregó la librería <code>flask_cors</code> y se habilitó <code>CORS(app)</code>, permitiendo que una página cargada desde otro origen pudiera hacer peticiones al servidor Flask local. También se mantuvo el archivo <code>state.json</code> para guardar el color, la cantidad de LEDs y la fecha de actualización del sistema .
+</p>
+
+<p>
+Además, el servidor se ejecutó con:
+</p>
+
+<ul>
+  <li><code>host="0.0.0.0"</code> → para permitir acceso desde otros dispositivos en red.</li>
+  <li><code>port=5000</code> → puerto de comunicación del servidor.</li>
+  <li><code>ssl_context="adhoc"</code> → para habilitar HTTPS local durante esta etapa del proyecto.</li>
+</ul>
+
+<p>
+Con esto, el servidor pudo seguir recibiendo y entregando información al frontend, ahora cargado desde GitHub Pages :contentReference[oaicite:2]{index=2}.
+</p>
+
+<a 
+  href="{{ '/assets/img/Practica5/parte2/p5_p2_codsVS.zip' | relative_url }}" 
+  download="p5_p2_codsVS.zip"
+  class="boton-descarga">
+  ⬇ Descargar códigos VS
+</a>
+
+<h4>2.3 Consulta del estado desde la red</h4>
+
+<p>
+Una vez configurado el servidor, se comprobó que el estado del sistema podía consultarse desde la red mediante la ruta <code>/api/state</code>. Al abrir esa dirección en el navegador, se mostraba un archivo en formato JSON con la información actual del sistema.
+</p>
+
+<p>
+Los datos consultados incluían:
+</p>
+
+<ul>
+  <li><code>color</code> → color seleccionado para los LEDs.</li>
+  <li><code>count</code> → cantidad de LEDs encendidos.</li>
+  <li><code>updated</code> → fecha y hora de la última actualización.</li>
+</ul>
+
+<p>
+Esto permitió corroborar que los cambios realizados desde la interfaz web realmente sí estaban llegando al servidor y quedaban almacenados correctamente en el estado del sistema :contentReference[oaicite:3]{index=3}.
+</p>
+
+<img src="{{ '/assets/img/Practica5/parte2/2.1.jpeg' | relative_url }}">
+
+<h4>2.4 Comunicación con el ESP32 en esta etapa</h4>
+
+<p>
+El microcontrolador continuó consultando el estado del sistema a través del servidor Flask, utilizando la dirección de red correspondiente y el código cargado en Arduino. De esta manera, el ESP32 seguía leyendo el color y la cantidad de LEDs definidos desde la interfaz, pero ahora con el frontend alojado en GitHub Pages.
+</p>
+
+<p>
+Así, aunque la interfaz ya no corría localmente en la misma computadora, el flujo de comunicación se mantuvo:
+</p>
+
+<ul>
+  <li>el usuario modificaba el estado desde GitHub Pages,</li>
+  <li>Flask lo recibía y lo guardaba en <code>state.json</code>,</li>
+  <li>y el ESP32 consultaba ese estado para reflejarlo en los LEDs .</li>
+</ul>
+
+<a 
+  href="{{ '/assets/img/Practica5/parte2/cod_colores.ino' | relative_url }}" 
+  download="cod_colores.ino"
+  class="boton-descarga">
+  ⬇ Descargar código ESP32video2
+</a>
+
+<h4>Video de la parte 2</h4>
+
+<video width="600" controls>
+  <source src="{{ '/assets/img/Practica5/parte2/video2.mp4' | relative_url }}" type="video/mp4">
+  Tu navegador no soporta video.
+</video>
 
   </div>
 </details>
