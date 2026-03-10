@@ -1,125 +1,179 @@
 ---
 layout: default
-title: Control remoto de tira LED usando ESP32, API Flask y Rende
+title: Control remoto de tira LED usando ESP32, API Flask y Render
 nav_order: 7
 ---
 
-# Tkinter comunicado con ESP32
+# Control remoto de tira LED usando ESP32, API Flask y Render
 
-  En la presente práctica se realizó la comunicación serial entre una computadora personal y una placa XIAO ESP32S3 utilizando MicroPython y una interfaz gráfica desarrollada en Python con Tkinter. El objetivo principal fue establecer un sistema de interacción bidireccional que permitiera tanto la lectura de un botón físico conectado a la placa como el control de un actuador (LED) desde una interfaz gráfica en la computadora.
+En esta práctica se desarrolló un sistema para controlar una tira de LEDs mediante un ESP32 y una interfaz web. El proyecto se implementó en tres etapas. Primero se probó el funcionamiento de forma local utilizando Flask como servidor en la computadora y una página web para enviar los comandos de color y número de LEDs.
+
+Posteriormente se separaron los componentes del sistema, manteniendo el backend en la computadora mientras que el frontend se publicó en GitHub Pages, permitiendo controlar el sistema desde otros dispositivos dentro de la misma red.
+
+Finalmente, el backend se desplegó en la nube mediante Render, mientras que la interfaz web permaneció en GitHub. Con esto se logró enviar información desde la interfaz web hacia el servidor y almacenarla correctamente, demostrando el uso de Flask para lectura y escritura de datos a través de la web.
 
 ---
 
-## Codigo generado en Thonny con Tkinter para interfaz gráfica
+<style>
+.acordeon-seccion {
+  margin: 1rem 0;
+}
 
-- **Código**  
+.acordeon-seccion details {
+  margin-bottom: 12px;
+  border: 2px solid #9e9e9e;
+  border-radius: 10px;
+  background: #efefef;
+  overflow: hidden;
+}
 
-<div style="margin: 1.5rem 0;">
+.acordeon-seccion summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 14px 18px;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  <a 
-    href="{{ '/assets/files/interfaz.py' | relative_url }}" 
-    download="interfaz.py"
-    style="
-      display:inline-block;
-      padding:12px 18px;
-      background: linear-gradient(135deg, #484D8A, #5E63A8);
-      color:white;
-      border-radius:12px;
-      text-decoration:none;
-      font-weight:600;
-      font-size:0.95rem;
-      box-shadow: 0 6px 14px rgba(72,77,138,0.25);
-      transition: all 0.2s ease;
-    "
-    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 18px rgba(72,77,138,0.35)';"
-    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 14px rgba(72,77,138,0.25)';"
-  >
-    ⬇ Descargar archivo interfaz.py
-  </a>
+.acordeon-seccion summary::-webkit-details-marker {
+  display: none;
+}
+
+.acordeon-seccion summary::after {
+  content: "▾";
+  font-size: 1.6rem;
+  color: #111;
+  border: 1.5px solid #444;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #cfcfcf;
+}
+
+.acordeon-seccion details[open] summary::after {
+  content: "▴";
+}
+
+.acordeon-contenido {
+  background: white;
+  padding: 18px 20px;
+  border-top: 1px solid #d0d0d0;
+}
+
+.acordeon-contenido h3 {
+  margin-top: 0.5rem;
+}
+
+.acordeon-contenido img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.boton-descarga {
+  display: inline-block;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #484D8A, #5E63A8);
+  color: white !important;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 6px 14px rgba(72,77,138,0.25);
+  transition: all 0.2s ease;
+}
+
+.boton-descarga:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(72,77,138,0.35);
+  text-decoration: none;
+}
+</style>
+
+<div class="acordeon-seccion">
+
+<details>
+  <summary>Parte 1</summary>
+  <div class="acordeon-contenido">
+
+### Título de la parte 1
+
+Escribe aquí la descripción o explicación de la primera parte.
+
+<!-- Ejemplo para imagen -->
+<!-- ![Nombre de imagen](assets/img/tu_imagen.png) -->
+
+<!-- Ejemplo para botón de descarga -->
+<!--
+<a 
+  href="{{ '/assets/files/archivo1.py' | relative_url }}" 
+  download="archivo1.py"
+  class="boton-descarga">
+  ⬇ Descargar archivo1.py
+</a>
+-->
+
+  </div>
+</details>
+
+<details>
+  <summary>Parte 2</summary>
+  <div class="acordeon-contenido">
+
+### Título de la parte 2
+
+Escribe aquí la descripción o explicación de la segunda parte.
+
+<!-- Ejemplo para imagen -->
+<!-- ![Nombre de imagen](assets/img/tu_imagen2.png) -->
+
+<!-- Ejemplo para botón de descarga -->
+<!--
+<a 
+  href="{{ '/assets/files/archivo2.py' | relative_url }}" 
+  download="archivo2.py"
+  class="boton-descarga">
+  ⬇ Descargar archivo2.py
+</a>
+-->
+
+  </div>
+</details>
+
+<details>
+  <summary>Parte 3</summary>
+  <div class="acordeon-contenido">
+
+### Título de la parte 3
+
+Escribe aquí la descripción o explicación de la tercera parte.
+
+<!-- Ejemplo para imagen -->
+<!-- ![Nombre de imagen](assets/img/tu_imagen3.png) -->
+
+<!-- Ejemplo para botón de descarga -->
+<!--
+<a 
+  href="{{ '/assets/files/archivo3.py' | relative_url }}" 
+  download="archivo3.py"
+  class="boton-descarga">
+  ⬇ Descargar archivo3.py
+</a>
+-->
+
+  </div>
+</details>
 
 </div>
 
-
-El código presentado implementa una interfaz gráfica desarrollada en Python utilizando la biblioteca Tkinter, cuya función principal es establecer comunicación serial con una placa XIAO ESP32S3 para el monitoreo y control de entradas y salidas digitales.
-
-Inicialmente, se importan las bibliotecas necesarias: tkinter para la creación de la interfaz gráfica, serial para la comunicación a través del puerto USB y time para introducir retardos que aseguren la correcta inicialización del puerto serial. Posteriormente, se configura el puerto de comunicación (COM8) y la velocidad de transmisión de datos a 115200 baudios, estableciendo la conexión serial con la placa.
-
-![Bibliotecas de Tkinter](assets/img/bibliotecatkinter.png)
-
-Una vez inicializada la comunicación, se crea la ventana principal de la interfaz gráfica, en la cual se incorporan elementos visuales como un canvas que contiene un círculo, el cual funciona como indicador del estado del botón físico conectado a la placa. Dicho círculo cambia de color de rojo a verde dependiendo de los mensajes recibidos por el puerto serial (OFF u ON).
-
-Adicionalmente, se incluye una etiqueta de texto que muestra el estado del LED conectado al pin D3, permitiendo al usuario conocer si este se encuentra encendido o apagado. Para el control del LED, se implementa un botón en la interfaz gráfica que, al ser presionado, envía un comando serial a la placa para alternar el estado del LED.
-
-
-![Interfaz Tkinter](assets/img/inte2.png)
-
-
 ---
 
-## Codigo generado en Thonny para la programación del ESP32
-
-  - **Código** 
-
-    <div style="margin: 1.5rem 0;">
-        <a 
-            href="{{ '/assets/files/codigoesp32.py' | relative_url }}" 
-            download="codigoesp32.py"
-            style="
-            display:inline-block;
-            padding:12px 18px;
-            background: linear-gradient(135deg, #484D8A, #5E63A8);
-            color:white;
-            border-radius:12px;
-            text-decoration:none;
-            font-weight:600;
-            font-size:0.95rem;
-            box-shadow: 0 6px 14px rgba(72,77,138,0.25);
-            transition: all 0.2s ease;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 18px rgba(72,77,138,0.35)';"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 14px rgba(72,77,138,0.25)';"
-        >
-            ⬇ Descargar archivo codigoesp32.py
-        </a>
-    </div>
-
-    El código implementa el control y monitoreo de una XIAO ESP32S3 utilizando MicroPython, permitiendo la interacción simultánea con un botón físico y un LED mediante comunicación serial con una computadora.
-
-    En primer lugar, se configuran los pines de entrada y salida digital: un botón físico conectado al pin D4, el cual utiliza una resistencia pull-up interna para la correcta detección de pulsaciones, y un LED conectado al pin D3, cuyo estado es controlado desde una interfaz gráfica en la computadora. Para la gestión de estos elementos se emplean variables de estado que permiten identificar cambios en el botón y en el LED.
-
-    ![Xiao esp32 pines](assets/img/pines.jpg)
-
-    Durante el ciclo principal del programa, el estado del botón físico es evaluado constantemente y, al detectarse una pulsación, se envían mensajes ON u OFF a través del puerto serial para su visualización en la interfaz gráfica. Al mismo tiempo, el microcontrolador recibe y procesa comandos enviados desde la computadora, los cuales permiten encender, apagar o alternar el estado del LED conectado al pin D3.
-
----
-
-## Ejecución del programa en CMD y dependencias necesarias
-
-  - **Ejecución del programa** 
-    
-    Para ejecutar la interfaz gráfica desarrollada en Python desde el Símbolo del sistema (CMD), es necesario indicar correctamente la ubicación del archivo .py. Cuando el archivo se encuentra en una carpeta con espacios o dentro de directorios específicos (por ejemplo, en OneDrive), se recomienda utilizar la ruta completa (ruta absoluta) entre comillas para evitar errores de lectura en la terminal. Esto permite que el comando identifique sin ambigüedades el archivo a ejecutar.
-
-    ![Ruta ejemplo](assets/img/ruta_programa.png)
-
-
-    Adicionalmente, para que el programa funcione correctamente es indispensable contar con las librerías necesarias instaladas en el entorno de Python. En particular, debido a que la interfaz se comunica con la XIAO ESP32S3 mediante puerto serial, se requiere instalar el módulo pyserial, ya que este permite abrir el puerto COM y leer/escribir datos desde Python. La instalación se realiza desde CMD mediante:
-
-      pip install pyserial
-
-    ![Comando que se debe instalar](assets/img/instal.png)
-
-    Una vez instalada la librería, el programa puede ejecutarse y visualizarse.
----
-
-## Video funcional
-
-- **Video funcionando**  
-    <video controls width="640">
-      <source src="{{ '/assets/img/p3_video.mp4' | relative_url }}" type="video/mp4">
-      Tu navegador no soporta video HTML5.
-    </video>
-
----
 ## Siguiente sección
 
 [Página Web Local](practica4.md)

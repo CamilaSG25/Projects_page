@@ -20,7 +20,7 @@ Donde observarás todas las prácticas que generamos en nuestra materia de Siste
 3. [Tkinter comunicado con ESP32](practica3.md)
 4. [Generación de PC](PC.md) 
 5. [Página web local con Live Server](practica4.md)
-5. [Control remoto de tira LED usando ESP32, API Flask y Rende](practica5.md)
+5. [Control remoto de tira LED usando ESP32, API Flask y Render](practica5.md)
 
  
 
