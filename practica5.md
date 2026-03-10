@@ -47,13 +47,13 @@ Finalmente, el backend se desplegó en la nube mediante Render, mientras que la 
   content: "▾";
   font-size: 1.6rem;
   color: #111;
-  border: 1.5px solid #444;
+  border: 1.5px solid #6f72b8;
   width: 32px;
   height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #cfcfcf;
+  background: #8c8fce;
 }
 
 .acordeon-seccion details[open] summary::after {
