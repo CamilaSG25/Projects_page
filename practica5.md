@@ -126,14 +126,15 @@ los archivos del servidor Flask y el archivo donde se almacenará el
 estado de los LEDs.
 </p>
 
-<p>
-Los archivos principales del proyecto son:
-app.py → servidor Flask encargado de manejar las peticiones.
-state.json → archivo donde se guarda el estado actual del sistema.
-index.html → estructura de la página web.
-styles.css → diseño visual de la página.
-app.js → lógica de interacción de la página web.
-</p>
+<p>Los archivos principales del proyecto son:</p>
+
+<ul>
+  <li><b>app.py</b> → servidor Flask encargado de manejar las peticiones.</li>
+  <li><b>state.json</b> → archivo donde se guarda el estado actual del sistema.</li>
+  <li><b>index.html</b> → estructura de la página web.</li>
+  <li><b>styles.css</b> → diseño visual de la página.</li>
+  <li><b>app.js</b> → lógica de interacción de la página web.</li>
+</ul>
 
 <p>
 Esta estructura permite separar claramente backend y frontend, facilitando el desarrollo y mantenimiento del sistema.
@@ -161,12 +162,12 @@ Posteriormente se programó el servidor Flask, el cual es responsable de manejar
 El servidor cuenta con varias rutas principales:
 </p>
 
-<p>
-/ → carga la página principal de la interfaz web.
-/api/state → permite consultar el estado actual del sistema.
-/api/set → permite modificar el color y la cantidad de LEDs encendidos.
-/static → permite servir los archivos estáticos de la interfaz.
-</p>
+<ul>
+  <li><code>/</code> → carga la página principal de la interfaz web.</li>
+  <li><code>/api/state</code> → permite consultar el estado actual del sistema.</li>
+  <li><code>/api/set</code> → permite modificar el color y la cantidad de LEDs encendidos.</li>
+  <li><code>/static</code> → permite servir los archivos estáticos de la interfaz.</li>
+</ul>
 
 <p>
 El servidor también utiliza un archivo llamado state.json para almacenar la información actual del sistema, como el color seleccionado y la cantidad de LEDs activos.
@@ -200,8 +201,6 @@ Cada vez que la página se actualiza o consulta el estado, el servidor responde 
 Esto permite mantener sincronizada la interfaz web con el estado real del sistema.
 </p>
 
-<img src="{{ '/assets/img/Practica5/1.3.jpeg' | relative_url }}">
-
 <h4>1.4 Configuración de red para comunicación con ESP32</h4>
 <p>
 Para que el microcontrolador ESP32 pudiera comunicarse con el servidor Flask, se configuró la dirección IP de la computadora donde se estaba ejecutando el servidor.
@@ -219,11 +218,11 @@ http://IP_DEL_SERVIDOR:5000/api/state
 En el código del microcontrolador se especifica esta dirección junto con la configuración de la red WiFi a la cual se conecta el dispositivo.
 </p>
 
+<img src="{{ '/assets/img/Practica5/1.3.jpeg' | relative_url }}">
+
 <p>
 De esta forma, el ESP32 puede obtener la información enviada desde la interfaz web y actualizar el estado de los LEDs.
 </p>
-
-<img src="{{ '/assets/img/Practica5/1.4.jpeg' | relative_url }}">
 
 <a 
   href="{{ '/assets/files/practica5/cod_colores1.ino' | relative_url }}" 
@@ -231,6 +230,12 @@ De esta forma, el ESP32 puede obtener la información enviada desde la interfaz 
   class="boton-descarga">
   ⬇ Descargar cod_colores1.ino
 </a>
+
+<p>
+Recuerda que para inicializar el código para que aparezca la IP y la pagina empiece a funcionar debes correr el archivo app.py en terminal así como se muestra en la imagen, das clic derecho y debe salir esta configuración de correr en terminal.
+</p>
+
+<img src="{{ '/assets/img/Practica5/1.4.jpeg' | relative_url }}">
 
   </div>
 </details>
