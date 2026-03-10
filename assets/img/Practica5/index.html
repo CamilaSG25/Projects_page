@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cámbiame de color</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+
+  <h1>Cámbiame de color</h1>
+
+  <div class="wrap">
+
+    <!-- ===== CARD IZQUIERDA ===== -->
+    <section class="card left">
+
+      <h2>Color a seleccionar:</h2>
+
+      <div class="row">
+
+        <!-- Input oculto -->
+        <input 
+          id="colorPicker" 
+          type="color" 
+          value="#7682cf" 
+          class="hiddenColor"
+        />
+
+        <!-- Preview del color -->
+        <div class="swatch" id="swatch"></div>
+
+        <!-- Botón que abre el selector -->
+        <button 
+          id="btnPick" 
+          class="btn ghost" 
+          type="button">
+          Seleccionar
+        </button>
+
+        <!-- Texto HEX -->
+        <div class="hex" id="hexText">#7682CF</div>
+
+      </div>
+
+      <h2>¿Cuántos LED’s quieres encendidos?</h2>
+      <div class="dots" id="dots"></div>
+
+      <div class="btns">
+        <button 
+          id="btnOff" 
+          class="btn ghost" 
+          type="button">
+          Apagar led’s
+        </button>
+
+        <button 
+          id="btnSend" 
+          class="btn" 
+          type="button">
+          Prender led’s
+        </button>
+      </div>
+
+    </section>
+
+
+    <!-- ===== CARD DERECHA ===== -->
+    <section class="card right">
+      <h2>Visualización en ESP32</h2>
+
+      <div class="bar">
+        <div class="dots barDots" id="barDots"></div>
+      </div>
+
+      <div class="small" id="lastUpdate"></div>
+    </section>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+
+</body>
+</html>

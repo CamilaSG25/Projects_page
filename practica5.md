@@ -119,10 +119,21 @@ los archivos del servidor Flask y el archivo donde se almacenará el
 estado de los LEDs.
 </p>
 
-      
+<p>
+Los archivos principales del proyecto son:
+app.py → servidor Flask encargado de manejar las peticiones.
+state.json → archivo donde se guarda el estado actual del sistema.
+index.html → estructura de la página web.
+styles.css → diseño visual de la página.
+app.js → lógica de interacción de la página web.
+</p>
+
+<p>
+Esta estructura permite separar claramente backend y frontend, facilitando el desarrollo y mantenimiento del sistema.
+</p>
 
 <!-- Ejemplo para imagen -->
-<!-- ![Nombre de imagen](assets/img/tu_imagen.png) -->
+![Estructura del VS](assets/img/Practica5/1.1.jpeg)
 
 <!-- Ejemplo para botón de descarga -->
 <!--
