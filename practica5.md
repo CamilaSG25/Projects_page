@@ -356,7 +356,7 @@ Así, aunque la interfaz ya no corría localmente en la misma computadora, el fl
   href="{{ '/assets/img/Practica5/parte2/cod_colores.ino' | relative_url }}" 
   download="cod_colores.ino"
   class="boton-descarga">
-  ⬇ Descargar código ESP32video2
+  ⬇ Descargar código ESP32
 </a>
 
 <h4>Video de la parte 2</h4>
