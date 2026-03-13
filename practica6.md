@@ -349,7 +349,7 @@ Además de las capturas del procedimiento, se obtuvo un video donde se muestra e
 #### Video del funcionamiento
 
 <video controls width="700">
- <source src="{{ '/workspaces/Projects_page/assets/img/practica6/video_pruebaBDFirebases.mp4' | relative_url }}" type="video/mp4">
+ <source src="{{ 'assets/img/video_pruebaBDFirebases.mp4' | relative_url }}" type="video/mp4">
 </video>
 
 ---
