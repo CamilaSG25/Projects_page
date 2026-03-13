@@ -113,4 +113,4 @@ Con este procedimiento se logró abrir y visualizar correctamente una **página 
 ---
 ## Siguiente sección
 
-[API local con Flask - Guardar y leer datos](practica5.md)
+[Control remoto de tira LED usando ESP32, API Flask y Render](practica5.md)
