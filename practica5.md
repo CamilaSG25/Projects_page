@@ -490,4 +490,4 @@ De esta manera, el microcontrolador podía obtener el estado actual del sistema 
 
 ## Siguiente sección
 
-[Página Web Local](practica4.md)
+[Base de datos en la nube con Firebase y Flask](practica6.md)
