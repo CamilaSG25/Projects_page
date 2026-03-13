@@ -37,7 +37,7 @@ Primero se ingresó a la consola de Firebase para configurar el proyecto que se 
 
 Posteriormente, en la sección de cuentas de servicio, se generó una clave privada para permitir la autenticación desde Python mediante Firebase Admin SDK.
 
-![Configuración del proyecto en Firebase](assets/img/practica6/1.peg)
+![Configuración del proyecto en Firebase](/workspaces/Projects_page/assets/img/practica6/1.jpeg)
 
 ---
 
@@ -45,11 +45,11 @@ Posteriormente, en la sección de cuentas de servicio, se generó una clave priv
 
 Una vez configurado el proyecto, se instalaron las librerías necesarias para desarrollar la API local y la conexión con Firebase. En esta parte se utilizaron Flask y firebase-admin como base principal del proyecto.
 
-![Instalación de Flask y Firebase Admin](assets/img/practica6/2.png)
+![Instalación de Flask y Firebase Admin](assets/img/practica6/2.jpeg)
 
 Después, se instalaron también las librerías pyserial y requests, necesarias para la comunicación serial con la XIAO ESP32S3 y para el envío de peticiones HTTP desde el script auxiliar hacia la API desarrollada en Flask.
 
-![Instalación de pyserial y requests](assets/img/practica6/7.png)
+![Instalación de pyserial y requests](assets/img/practica6/7.jpeg)
 
 ---
 
@@ -57,7 +57,7 @@ Después, se instalaron también las librerías pyserial y requests, necesarias 
 
 Después de generar la clave privada, se descargó el archivo `serviceAccountKey.json` y se colocó dentro de la carpeta del proyecto. Este archivo permitió autenticar la aplicación desarrollada en Python con la base de datos de Firebase.
 
-![Archivo de credenciales dentro del proyecto](assets/img/practica6/10.png)
+![Archivo de credenciales dentro del proyecto](assets/img/practica6/10.jpeg)
 
 ---
 
@@ -73,7 +73,7 @@ En esta API se implementaron las siguientes rutas principales:
 - `/prendas/<tag>/toggle` con método `POST` para alternar su estado y aumentar el contador
 - `/prendas` con método `GET` para listar todas las prendas registradas
 
-![Código del archivo app.py y ejecución de Flask](assets/img/6.png)
+![Código del archivo app.py y ejecución de Flask](assets/img/practica6/6.jpeg)
 
 #### Código usado en `app.py`
 
@@ -203,7 +203,7 @@ Después de escribir el archivo `app.py`, se ejecutó el programa desde la termi
 
 En esta etapa se verificó que la API estuviera activa accediendo desde el navegador a la ruta principal. También se probó una ruta adicional para comprobar la consulta de información almacenada en la base de datos.
 
-![Verificación de la API en el navegador](assets/img/5.png)
+![Verificación de la API en el navegador](assets/img/practica6/5.jpeg)
 
 Con esta prueba se confirmó que la aplicación Flask estaba funcionando y que ya existía comunicación entre el programa local y Firebase.
 
@@ -215,7 +215,7 @@ Una vez verificado que Flask estaba funcionando correctamente, se realizaron pru
 
 Primero se envió una petición `POST` a la ruta `/prendas`, incluyendo un cuerpo en formato JSON con los datos de una prenda. Después, se utilizó la ruta `/prendas/<tag>/toggle` para alternar el estado del registro creado.
 
-![Pruebas manuales de la API en PowerShell](assets/img/3.png)
+![Pruebas manuales de la API en PowerShell](assets/img/practica6/3.jpeg)
 
 Estas pruebas fueron importantes porque permitieron validar la lógica del sistema antes de integrar el botón físico y la comunicación serial.
 
@@ -227,11 +227,11 @@ Después de realizar las pruebas manuales, se ingresó a Firestore Database dent
 
 Primero se verificó una colección básica de inventario o sensores, con el fin de confirmar que la conexión entre Python y Firestore funcionaba correctamente.
 
-![Colección de sensores en Firestore](assets/img/8.png)
+![Colección de sensores en Firestore](assets/img/practica6/8.jpeg)
 
 Posteriormente, se revisó la colección `prendas`, en donde ya aparecían los documentos generados desde la API. En estos registros se observó información como el cliente, color, contador, estado, talla, timestamp y tipo de prenda.
 
-![Colección de prendas en Firestore](assets/img/4.png)
+![Colección de prendas en Firestore](assets/img/practica6/4.jpeg)
 
 Con esta comprobación se confirmó que la API desarrollada en Flask sí estaba escribiendo información correctamente en la base de datos de Firebase.
 
@@ -241,11 +241,11 @@ Con esta comprobación se confirmó que la API desarrollada en Flask sí estaba 
 
 Una vez almacenados los datos, se probaron también las rutas de consulta para visualizar la información directamente desde el navegador. La primera prueba consistió en listar todas las prendas registradas en la base de datos mediante la ruta `/prendas`.
 
-![Listado de prendas con GET /prendas](assets/img/9.png)
+![Listado de prendas con GET /prendas](assets/img/practica6/9.jpeg)
 
 Después, se utilizó la ruta `/prendas/<tag>` para consultar una prenda específica a partir de su identificador único. Esta ruta devolvió en formato JSON los datos completos del registro seleccionado.
 
-![Consulta de una prenda específica con GET /prendas/tag](assets/img/11.png)
+![Consulta de una prenda específica con GET /prendas/tag](assets/img/practica6/11.jpeg)
 
 Estas pruebas permitieron confirmar que la API no solo guardaba información, sino que también podía recuperarla correctamente desde la base de datos.
 
@@ -349,7 +349,7 @@ Además de las capturas del procedimiento, se obtuvo un video donde se muestra e
 #### Video del funcionamiento
 
 <video controls width="700">
-  <source src="assets/img/video_pruebaBDFirebases.mp4" type="video/mp4">
+  <source src="assets/img/practica6/video_pruebaBDFirebases.mp4" type="video/mp4">
   Tu navegador no soporta la reproducción de video.
 </video>
 
