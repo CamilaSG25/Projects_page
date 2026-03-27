@@ -362,4 +362,4 @@ En esta práctica se logró integrar una base de datos en la nube con una API lo
 
 ## Siguiente sección
 
-[Volver al inicio](index.md)
+[COntrol de PLC con python](practica7.md)
