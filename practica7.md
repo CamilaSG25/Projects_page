@@ -8,10 +8,10 @@ nav_order: 8
 
 ## Introducción
 
-En esta práctica se desarrolló una interfaz web usando **Flask** en Python para controlar de forma remota un PLC a través del protocolo **Modbus TCP**.  
-La idea principal fue crear una página accesible desde el navegador, con botones para **encender** y **apagar** un piloto conectado al PLC.
+En esta práctica se desarrolló una interfaz web usando **Flask** en Python para controlar de forma remota un PLC a través del protocolo Modbus TCP.  
+La idea principal fue crear una página accesible desde el navegador, con botones para encender y apagar un piloto conectado al PLC.
 
-La comunicación se realizó usando la librería `pymodbus`, enviando valores a un registro del PLC previamente configurado dentro de **Connected Components Workbench**. De esta manera, Python actúa como intermediario entre la interfaz web y el controlador industrial.
+La comunicación se realizó usando la librería pymodbus, enviando valores a un registro del PLC previamente configurado dentro de Connected Components Workbench (CCW). De esta manera, Python actúa como intermediario entre la interfaz web y el controlador industrial.
 
 ---
 
@@ -21,17 +21,21 @@ Implementar una aplicación web en Python con Flask que permita enviar comandos 
 
 ---
 
-## Código en Python
+El programa fue desarrollado en Python utilizando Flask para la interfaz web y pymodbus para la comunicación con el PLC.  
+En este caso, la aplicación se conecta al PLC con la dirección IP `192.168.3.154`, que corresponde a Modbus TCP. El sistema escribe valores enteros en el registro configurado, de forma que:
 
-El programa fue desarrollado en Python utilizando Flask para la interfaz web y `pymodbus` para la comunicación con el PLC.  
-En este caso, la aplicación se conecta al PLC con la dirección IP `192.168.3.154`, utilizando el puerto `502`, que corresponde a Modbus TCP. El sistema escribe valores enteros en el registro configurado, de forma que:
-
-- `1` enciende el piloto
-- `0` apaga el piloto
+- `1` enciende el piloto  
+- `0` apaga el piloto  
 
 Además, la aplicación genera una interfaz web con dos botones, uno para encender y otro para apagar, mostrando también un mensaje de estado al usuario.
 
-Puedes descargar el código aquí: :contentReference[oaicite:0]{index=0}
+---
+
+### Descargar código
+
+<a href="{{ '/assets/files/PLC_python.py' | relative_url }}" class="btn btn-primary">
+Descargar código en Python
+</a>
 
 ---
 
@@ -39,7 +43,7 @@ Puedes descargar el código aquí: :contentReference[oaicite:0]{index=0}
 
 ### 1. Configuración de la conexión Ethernet del PLC
 
-Primero se configuró la comunicación Ethernet del PLC dentro de **Connected Components Workbench**.  
+Primero se configuró la comunicación Ethernet del PLC dentro de Connected Components Workbench (CCW).  
 Se asignó manualmente la dirección IP `192.168.3.154`, la cual sería utilizada posteriormente desde Python para establecer la conexión Modbus TCP con el controlador.
 
 ![Configuración Ethernet del PLC](assets/img/3.jpeg)
@@ -74,7 +78,7 @@ Finalmente, se ejecutó la aplicación Flask en la computadora, creando una inte
 
 `http://172.22.20.102:5000`
 
-Desde esta página se muestran dos botones: **Prender piloto** y **Apagar piloto**.  
+Desde esta página se muestran dos botones: Prender piloto y Apagar piloto.  
 Cada botón envía una solicitud al servidor Flask, el cual escribe el valor correspondiente en el PLC mediante Modbus TCP.
 
 De esta forma, la interfaz web funciona como panel de control remoto para el piloto conectado al controlador industrial.
