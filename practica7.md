@@ -120,6 +120,6 @@ En conjunto, esta implementación muestra una forma práctica de integrar tecnol
 
 ---
 
-## Inicio
+## Siguiente sección
 
-[Inicio](index.md)
+[Proyecto final](PF.md)

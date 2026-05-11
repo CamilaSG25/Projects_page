@@ -23,6 +23,7 @@ Donde observarás todas las prácticas que generamos en nuestra materia de Siste
 5. [Control remoto de tira LED usando ESP32, API Flask y Render](practica5.md)
 6. [Base de Datos en la Nube](practica6.md)
 7. [Control de PLC con ptyhon](practica7.md)
+8. [Proyecto final](PF.md)
 
  
 
